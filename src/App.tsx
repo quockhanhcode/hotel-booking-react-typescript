@@ -1,14 +1,10 @@
-import { useState } from "react";
 import "./App.css";
-import Product from "./assets/components/Product";
-import { Button } from "./components/ui/button";
+import { useRoutes } from "react-router-dom";
+import { routes } from "./routes";
 
 function App() {
-  return (
-    <>
-      <Button variant="outline">Button</Button>
-    </>
-  );
+  const routerElement = useRoutes(routes);
+  return <div>{routerElement}</div>;
 }
 
 export default App;
