@@ -52,12 +52,8 @@ export default function RegisterPage() {
       {/* Auth Card */}
       <div className="relative w-full max-w-md">
         <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-700/50 p-8 md:p-10 relative">
-          {/* Back Button */}
           {currentPage === "signup" && (
-            <button
-              onClick={() => setCurrentPage("login")}
-              className="absolute top-6 left-6 text-slate-400 hover:text-slate-300 transition-colors"
-            >
+            <button className="absolute top-6 left-6 text-slate-400 hover:text-slate-300 transition-colors">
               <ArrowLeft className="w-5 h-5" />
             </button>
           )}

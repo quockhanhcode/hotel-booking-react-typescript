@@ -6,6 +6,7 @@ const AboutPage = lazy(() => import("@/pages/HomeTemplate/AboutPage"));
 const AuthTemplate = lazy(() => import("@/pages/AuthTemplate"));
 const LoginPage = lazy(() => import("@/pages/AuthTemplate/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/AuthTemplate/RegisterPage"));
+const DashBoard = lazy(() => import("@/pages/AdminTemplate/"));
 
 const withSuspense = (Component: LazyExoticComponent<FC>) => {
   return (
@@ -23,6 +24,10 @@ export const routes: RouteObject[] = [
   {
     path: "/about",
     element: withSuspense(AboutPage),
+  },
+  {
+    path: "/dasboard",
+    element: withSuspense(DashBoard),
   },
   {
     path: "/auth",
