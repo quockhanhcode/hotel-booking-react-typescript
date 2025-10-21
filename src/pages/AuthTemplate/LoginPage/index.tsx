@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { loginApi } from "@/services/auth.api";
+import { useNavigate } from "react-router";
 
 const schema = z.object({
   email: z.string().nonempty("Không được bỏ trống"),
@@ -15,6 +16,8 @@ const schema = z.object({
 
 type LoginFormInputs = z.infer<typeof schema>;
 export default function LoginPage() {
+  const navigate = useNavigate();
+
   const { mutate: handleLogin, isPending } = useMutation({
     mutationFn: (data: LoginFormInputs) => loginApi(data),
     onSuccess: (currentUser) => {
@@ -37,12 +40,12 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (data: LoginFormInputs) => {
-    handleLogin(data);
+    // navigate("/dashboard");
+    console.log(data);
   };
 
   return (
     <div className="mx-auto relative top-1/2 -translate-y-1/2">
-      {/* Login Card */}
       <div className="relative w-full max-w-md mx-auto">
         <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-700/50 p-8 md:p-10">
           {/* Header */}
@@ -54,10 +57,8 @@ export default function LoginPage() {
             <p className="text-slate-400 text-sm">Chào mừng bạn quay lại</p>
           </div>
 
-          {/* Form Fields */}
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-5">
-              {/* Email Input */}
               <Label className="block text-sm font-medium text-slate-300 mb-2">
                 Email
               </Label>
@@ -70,8 +71,6 @@ export default function LoginPage() {
                   className="w-full pl-10 pr-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                 />
               </div>
-
-              {/* Password Input */}
               <div>
                 <Label className="block text-sm font-medium text-slate-300 mb-2">
                   Mật Khẩu
@@ -99,8 +98,6 @@ export default function LoginPage() {
                   </Button>
                 </div>
               </div>
-
-              {/* Remember & Forgot Password */}
               <div className="flex items-center justify-between text-sm">
                 <Label className="flex items-center text-slate-400 hover:text-slate-300 cursor-pointer">
                   <Input
@@ -113,8 +110,6 @@ export default function LoginPage() {
                   Quên mật khẩu?
                 </Button>
               </div>
-
-              {/* Submit Button */}
               <Button
                 disabled={loading}
                 className="w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-lg hover:from-purple-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6 relative overflow-hidden group"
@@ -133,7 +128,6 @@ export default function LoginPage() {
             </div>
           </form>
 
-          {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-slate-600"></div>
@@ -145,7 +139,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Social Buttons */}
           <div className="grid grid-cols-2 gap-4">
             <Button className="py-2 px-4 bg-slate-700/50 border border-slate-600 rounded-lg text-slate-300 hover:bg-slate-700 hover:border-slate-500 transition-all font-medium text-sm">
               Google
@@ -154,8 +147,6 @@ export default function LoginPage() {
               GitHub
             </Button>
           </div>
-
-          {/* Sign Up Link */}
           <p className="text-center text-slate-400 text-sm mt-6">
             Chưa có tài khoản?{" "}
             <Button
