@@ -15,12 +15,7 @@ export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const stats = [
-    {
-      label: "Tổng Bình Luận",
-      value: "1,250",
-      icon: MessageSquare,
-      color: "bg-blue-500",
-    },
+    { label: "Tổng Bình Luận", value: "1,250", icon: MessageSquare, color: "bg-blue-500"},
     { label: "Đặt Phòng", value: "348", icon: Calendar, color: "bg-green-500" },
     {
       label: "Người Dùng",
