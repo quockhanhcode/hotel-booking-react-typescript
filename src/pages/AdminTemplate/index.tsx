@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Outlet } from "react-router";
+import { useNavigate } from "react-router";
 import {
   Menu,
   X,
@@ -9,22 +11,14 @@ import {
   Home,
   MapPin,
 } from "lucide-react";
+import DashboardPage from "./DashboardPage";
+import UsersManagement from "./UsersManagement";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const stats = [
-    { label: "Tổng Bình Luận", value: "1,250", icon: MessageSquare, color: "bg-blue-500"},
-    { label: "Đặt Phòng", value: "348", icon: Calendar, color: "bg-green-500" },
-    {
-      label: "Người Dùng",
-      value: "2,847",
-      icon: Users,
-      color: "bg-purple-500",
-    },
-    { label: "Phòng", value: "156", icon: Home, color: "bg-orange-500" },
-  ];
+  let navigate = useNavigate();
 
   const comments = [
     {
@@ -66,30 +60,6 @@ export default function Dashboard() {
       checkIn: "2025-01-22",
       checkOut: "2025-01-25",
       status: "Đã xác nhận",
-    },
-  ];
-
-  const users = [
-    {
-      id: 1,
-      name: "Nguyễn Văn A",
-      email: "nguyena@email.com",
-      role: "Khách",
-      joinDate: "2025-01-01",
-    },
-    {
-      id: 2,
-      name: "Trần Thị B",
-      email: "tranb@email.com",
-      role: "Khách",
-      joinDate: "2025-01-05",
-    },
-    {
-      id: 3,
-      name: "Lê Văn C",
-      email: "levanc@email.com",
-      role: "Admin",
-      joinDate: "2024-12-20",
     },
   ];
 
@@ -142,30 +112,13 @@ export default function Dashboard() {
   ];
 
   const menuItems = [
-    { id: "overview", label: "Tổng Quan", icon: BarChart3 },
-    { id: "comments", label: "Bình Luận", icon: MessageSquare },
-    { id: "bookings", label: "Đặt Phòng", icon: Calendar },
-    { id: "users", label: "Người Dùng", icon: Users },
-    { id: "rooms", label: "Phòng", icon: Home },
-    { id: "locations", label: "Vị Trí", icon: MapPin },
+    { id: "overview", label: "Tổng Quan", icon: BarChart3, link: "" },
+    { id: "comments", label: "Bình Luận", icon: MessageSquare, link: "" },
+    { id: "bookings", label: "Đặt Phòng", icon: Calendar, link: "" },
+    { id: "users", label: "Người Dùng", icon: Users, link: "user-management" },
+    { id: "rooms", label: "Phòng", icon: Home, link: "" },
+    { id: "locations", label: "Vị Trí", icon: MapPin, link: "" },
   ];
-
-  const StatCard = ({ label, value, Icon, color, delay }) => (
-    <div
-      className={`bg-white rounded-lg shadow p-6 flex items-center transform transition-all duration-700 ease-out hover:shadow-lg hover:scale-105 opacity-0 animate-fade-in-up`}
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      <div
-        className={`${color} p-3 rounded-lg mr-4 transition-transform duration-300 hover:rotate-12`}
-      >
-        <Icon className="text-white" size={24} />
-      </div>
-      <div>
-        <p className="text-gray-600 text-sm">{label}</p>
-        <p className="text-2xl font-bold text-gray-900">{value}</p>
-      </div>
-    </div>
-  );
 
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden">
@@ -245,7 +198,10 @@ export default function Dashboard() {
           {menuItems.map((item, idx) => (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => {
+                setActiveTab(item.id);
+                navigate(item.link);
+              }}
               className={`w-full flex items-center px-6 py-3 transition-all duration-300 hover:pl-8 ${
                 activeTab === item.id
                   ? "bg-blue-600 border-l-4 border-blue-400 shadow-lg"
@@ -280,26 +236,11 @@ export default function Dashboard() {
             <p className="text-gray-600">Quản lý thông tin hệ thống</p>
           </div>
 
-          {/* Overview Tab */}
-          {activeTab === "overview" && (
-            <div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                {stats.map((stat, idx) => (
-                  <StatCard
-                    key={idx}
-                    label={stat.label}
-                    value={stat.value}
-                    Icon={stat.icon}
-                    color={stat.color}
-                    delay={idx * 100}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
+          <Outlet />
+          {/* {activeTab === "overview" && <DashboardPage/>} */}
 
           {/* Comments Tab */}
-          {activeTab === "comments" && (
+          {/* {activeTab === "comments" && (
             <div className="bg-white rounded-lg shadow overflow-hidden animate-fade-in-up">
               <table className="w-full">
                 <thead className="bg-gray-50 border-b">
@@ -349,10 +290,10 @@ export default function Dashboard() {
                 </tbody>
               </table>
             </div>
-          )}
+          )} */}
 
           {/* Bookings Tab */}
-          {activeTab === "bookings" && (
+          {/* {activeTab === "bookings" && (
             <div className="bg-white rounded-lg shadow overflow-hidden animate-fade-in-up">
               <table className="w-full">
                 <thead className="bg-gray-50 border-b">
@@ -414,69 +355,10 @@ export default function Dashboard() {
                 </tbody>
               </table>
             </div>
-          )}
-
-          {/* Users Tab */}
-          {activeTab === "users" && (
-            <div className="bg-white rounded-lg shadow overflow-hidden animate-fade-in-up">
-              <table className="w-full">
-                <thead className="bg-gray-50 border-b">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                      Tên
-                    </th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                      Email
-                    </th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                      Vai Trò
-                    </th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                      Ngày Tham Gia
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user, idx) => (
-                    <tr
-                      key={user.id}
-                      className="border-b hover:bg-purple-50 transition-all duration-300 cursor-pointer"
-                      style={{
-                        animation: `fadeInUp 0.5s ease-out ${
-                          idx * 100
-                        }ms forwards`,
-                        opacity: 0,
-                      }}
-                    >
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                        {user.name}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-600">
-                        {user.email}
-                      </td>
-                      <td className="px-6 py-4 text-sm">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-semibold transition-all duration-300 inline-block hover:scale-110 ${
-                            user.role === "Admin"
-                              ? "bg-red-100 text-red-800"
-                              : "bg-blue-100 text-blue-800"
-                          }`}
-                        >
-                          {user.role}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-600">
-                        {user.joinDate}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+          )} */}
 
           {/* Rooms Tab */}
-          {activeTab === "rooms" && (
+          {/* {activeTab === "rooms" && (
             <div className="bg-white rounded-lg shadow overflow-hidden animate-fade-in-up">
               <table className="w-full">
                 <thead className="bg-gray-50 border-b">
@@ -532,10 +414,10 @@ export default function Dashboard() {
                 </tbody>
               </table>
             </div>
-          )}
+          )} */}
 
           {/* Locations Tab */}
-          {activeTab === "locations" && (
+          {/* {activeTab === "locations" && (
             <div className="bg-white rounded-lg shadow overflow-hidden animate-fade-in-up">
               <table className="w-full">
                 <thead className="bg-gray-50 border-b">
@@ -585,7 +467,7 @@ export default function Dashboard() {
                 </tbody>
               </table>
             </div>
-          )}
+          )} */}
         </div>
       </main>
     </div>
