@@ -6,7 +6,10 @@ const AboutPage = lazy(() => import("@/pages/HomeTemplate/AboutPage"));
 const AuthTemplate = lazy(() => import("@/pages/AuthTemplate"));
 const LoginPage = lazy(() => import("@/pages/AuthTemplate/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/AuthTemplate/RegisterPage"));
-const DashBoard = lazy(() => import("@/pages/AdminTemplate/"));
+
+const AdminLayout = lazy(() => import("@/pages/AdminTemplate/"));
+const DashboardPage = lazy(() => import("@/pages/AdminTemplate/DashboardPage"));
+const UsersPage = lazy(() => import("@/pages/AdminTemplate/UsersManagement"));
 
 const withSuspense = (Component: LazyExoticComponent<FC>) => {
   return (
@@ -27,7 +30,11 @@ export const routes: RouteObject[] = [
   },
   {
     path: "/dashboard",
-    element: withSuspense(DashBoard),
+    element: withSuspense(AdminLayout),
+    children: [
+      { path: "", element: withSuspense(DashboardPage) },
+      { path: "user-management", element: withSuspense(UsersPage) },
+    ],
   },
   {
     path: "/auth",
