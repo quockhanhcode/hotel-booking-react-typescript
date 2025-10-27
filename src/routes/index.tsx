@@ -9,7 +9,11 @@ const RegisterPage = lazy(() => import("@/pages/AuthTemplate/RegisterPage"));
 
 const AdminLayout = lazy(() => import("@/pages/AdminTemplate/"));
 const DashboardPage = lazy(() => import("@/pages/AdminTemplate/DashboardPage"));
-const UsersPage = lazy(() => import("@/pages/AdminTemplate/UsersManagement"));
+const UsersManagement = lazy(() => import("@/pages/AdminTemplate/UsersManagement"));
+const LocationsManagement = lazy(() => import("@/pages/AdminTemplate/LocationsManagement"));
+const RoomsManagement = lazy(() => import("@/pages/AdminTemplate/RoomsManagement"));
+const CommentsManagement = lazy(() => import("@/pages/AdminTemplate/CommentsManagement"));
+const BookingsManagement = lazy(() => import("@/pages/AdminTemplate/BookingsManagement"));
 
 const withSuspense = (Component: LazyExoticComponent<FC>) => {
   return (
@@ -33,7 +37,11 @@ export const routes: RouteObject[] = [
     element: withSuspense(AdminLayout),
     children: [
       { path: "", element: withSuspense(DashboardPage) },
-      { path: "user-management", element: withSuspense(UsersPage) },
+      { path: "user-management", element: withSuspense(UsersManagement) },
+      { path: "location-management", element: withSuspense(LocationsManagement) },
+      { path: "room-management", element: withSuspense(RoomsManagement) },
+      { path: "comment-management", element: withSuspense(CommentsManagement) },
+      { path: "booking-management", element: withSuspense(BookingsManagement) },
     ],
   },
   {
