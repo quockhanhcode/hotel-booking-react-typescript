@@ -40,7 +40,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = (data: LoginFormInputs) => {
-    // navigate("/dashboard");
+    navigate("/dashboard");
     console.log(data);
   };
 
