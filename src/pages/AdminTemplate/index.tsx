@@ -20,68 +20,30 @@ export default function Dashboard() {
 
   const menuItems = [
     { id: "overview", label: "Tổng Quan", icon: BarChart3, link: "" },
-    { id: "comments", label: "Bình Luận", icon: MessageSquare, link: "comment-management" },
-    { id: "bookings", label: "Đặt Phòng", icon: Calendar, link: "booking-management" },
+    {
+      id: "comments",
+      label: "Bình Luận",
+      icon: MessageSquare,
+      link: "comment-management",
+    },
+    {
+      id: "bookings",
+      label: "Đặt Phòng",
+      icon: Calendar,
+      link: "booking-management",
+    },
     { id: "users", label: "Người Dùng", icon: Users, link: "user-management" },
     { id: "rooms", label: "Phòng", icon: Home, link: "room-management" },
-    { id: "locations", label: "Vị Trí", icon: MapPin, link: "location-management" },
+    {
+      id: "locations",
+      label: "Vị Trí",
+      icon: MapPin,
+      link: "location-management",
+    },
   ];
 
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden">
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes slideInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        @keyframes pulse-glow {
-          0%, 100% {
-            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-          }
-          50% {
-            box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
-          }
-        }
-        .animate-fade-in-up {
-          animation: fadeInUp 0.6s ease-out forwards;
-        }
-        .animate-slide-in-left {
-          animation: slideInLeft 0.5s ease-out;
-        }
-        .animate-slide-in-right {
-          animation: slideInRight 0.5s ease-out;
-        }
-        .animate-pulse-glow {
-          animation: pulse-glow 2s infinite;
-        }
-      `}</style>
-
       {/* Sidebar */}
       <aside
         className={`${
@@ -110,9 +72,7 @@ export default function Dashboard() {
                 navigate(item.link);
               }}
               className={`w-full flex items-center px-6 py-3 transition-all duration-300 hover:pl-8 ${
-                activeTab === item.id
-                  ? "bg-blue-600 border-l-4 border-blue-400 shadow-lg"
-                  : "hover:bg-gray-700"
+                activeTab === item.id ? "bg-blue-600 border-l-4 border-blue-400 shadow-lg" : "hover:bg-gray-700"
               } group`}
               style={{ transitionDelay: `${idx * 50}ms` }}
             >
