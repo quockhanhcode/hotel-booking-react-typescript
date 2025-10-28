@@ -267,7 +267,6 @@ export default function HotelBookingHome() {
               Trải Nghiệm Kỳ Nghỉ <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
                 Đẳng Cấp Thế Giới
-                <br /> 11111111111111111111111
               </span>
             </h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto">
