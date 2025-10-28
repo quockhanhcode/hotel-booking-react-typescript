@@ -72,7 +72,9 @@ export default function Dashboard() {
                 navigate(item.link);
               }}
               className={`w-full flex items-center px-6 py-3 transition-all duration-300 hover:pl-8 ${
-                activeTab === item.id ? "bg-blue-600 border-l-4 border-blue-400 shadow-lg" : "hover:bg-gray-700"
+                activeTab === item.id
+                  ? "bg-blue-600 border-l-4 border-blue-400 shadow-lg"
+                  : "hover:bg-gray-700"
               } group`}
               style={{ transitionDelay: `${idx * 50}ms` }}
             >
