@@ -264,9 +264,10 @@ export default function HotelBookingHome() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-32">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Trải Nghiệm Kỳ Nghỉ1 <br />
+              Trải Nghiệm Kỳ Nghỉ <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
                 Đẳng Cấp Thế Giới
+                <br /> 11111111111111111111111
               </span>
             </h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto">
