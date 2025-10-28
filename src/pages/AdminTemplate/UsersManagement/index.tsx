@@ -64,7 +64,7 @@ export default function UsersManagement() {
         <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-600 mb-1">Tổng người dùng</p>
+              <p className="text-sm text-slate-600 mb-1">Tổng người dùng 123</p>
               <p className="text-3xl font-bold text-blue-800">{users.length}</p>
             </div>
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
