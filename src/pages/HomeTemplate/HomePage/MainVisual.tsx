@@ -135,7 +135,7 @@ export default function MainVisual() {
                 <div className="relative">
                   <Users className="absolute left-3 top-3.5 text-slate-400 w-4 h-4" />
                   <Select>
-                    <SelectTrigger className="w-full h-full text-black pt-3 pb-3">
+                    <SelectTrigger className="w-full !h-full text-black pt-3 pb-3">
                       <SelectValue placeholder="Select a fruit" />
                     </SelectTrigger>
                     <SelectContent>
@@ -149,7 +149,7 @@ export default function MainVisual() {
                   </Select>
                 </div>
                 <Select>
-                  <SelectTrigger className="w-full text-black">
+                  <SelectTrigger className="w-full !h-full text-black">
                     <SelectValue placeholder="Select a fruit" />
                   </SelectTrigger>
                   <SelectContent>

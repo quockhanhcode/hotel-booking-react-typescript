@@ -1,13 +1,17 @@
 import { lazy, Suspense, type FC, type LazyExoticComponent } from "react";
 import { type RouteObject } from "react-router-dom";
 
-const HomePage = lazy(() => import("@/pages/HomeTemplate/HomePage"));
+const HomeTemplate = lazy(() => import("@/pages/HomeTemplate"));
 const AuthTemplate = lazy(() => import("@/pages/AuthTemplate"));
 const LoginPage = lazy(() => import("@/pages/AuthTemplate/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/AuthTemplate/RegisterPage"));
 
 const AdminLayout = lazy(() => import("@/pages/AdminTemplate/"));
 const DashboardPage = lazy(() => import("@/pages/AdminTemplate/DashboardPage"));
+const ListRoom = lazy(() => import("@/pages/HomeTemplate/ListRoomByLocation"));
+const HomePage = lazy(() => import("@/pages/HomeTemplate/HomePage"));
+const AboutPage = lazy(() => import("@/pages/HomeTemplate/About"));
+const ContactPage = lazy(() => import("@/pages/HomeTemplate/Contact"));
 const UsersManagement = lazy(
   () => import("@/pages/AdminTemplate/UsersManagement")
 );
@@ -60,7 +64,25 @@ const withSuspense = (Component: LazyExoticComponent<FC>) => {
 export const routes: RouteObject[] = [
   {
     path: "/",
-    element: withSuspense(HomePage),
+    element: withSuspense(HomeTemplate),
+    children: [
+      {
+        path: "",
+        element: withSuspense(HomePage),
+      },
+      {
+        path: "/about",
+        element: withSuspense(AboutPage),
+      },
+      {
+        path: "/contact",
+        element: withSuspense(ContactPage),
+      },
+      {
+        path: "/list-room",
+        element: withSuspense(ListRoom),
+      },
+    ],
   },
   {
     path: "/dashboard",
