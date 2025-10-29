@@ -117,9 +117,9 @@ export default function UsersManagement() {
       </div>
 
       {/* Filters and Actions */}
-      <div className="bg-white rounded-xl shadow-sm p-6 mb-6 border border-slate-200 animate-fade-in-up">
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div className="flex flex-1 gap-4 w-full md:w-auto">
+      <div className="bg-white rounded-xl shadow-sm p-6 mb-6 border border-slate-200 animate-fade-in-up max-sm:p-5">
+      <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+        <div className="flex max-sm:flex-col flex-1 gap-4 w-full lg:w-auto">
           {/* Search Input */}
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 pointer-events-none" />
@@ -131,7 +131,7 @@ export default function UsersManagement() {
           </div>
 
           {/* Filter Select */}
-          <div className="relative w-[180px]">
+          <div className="relative w-[180px] max-sm:w-full">
             <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 pointer-events-none" />
             <Select defaultValue="all">
               <SelectTrigger className="pl-10 !h-11 w-full">
@@ -147,7 +147,7 @@ export default function UsersManagement() {
         </div>
 
         {/* ⚙️ Actions */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 max-sm:flex-col">
           <Button
             variant="outline"
             className="flex items-center gap-2 h-11 border-slate-300 hover:bg-slate-50"
@@ -166,7 +166,7 @@ export default function UsersManagement() {
       {/* Users Table */}
       <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 animate-fade-in-up">
         <div className="overflow-x-auto overflow-y-hidden">
-          <table className="w-full">
+          <table className="w-full min-w-[900px]">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>
                 <th className="px-6 py-4 w-2/12 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">

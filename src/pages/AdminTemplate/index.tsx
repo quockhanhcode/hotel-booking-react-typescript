@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import { useNavigate } from "react-router";
 import {
@@ -15,6 +15,17 @@ import {
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setSidebarOpen(false);
+      } 
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const navigate = useNavigate();
 
@@ -43,14 +54,14 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
+    <div className="flex h-screen bg-gray-100 overflow-hidden max-md:pb-12">
       {/* Sidebar */}
       <aside
         className={`${
           sidebarOpen ? "w-64" : "w-20"
-        } bg-gradient-to-b from-gray-900 to-gray-800 text-white transition-all duration-500 ease-in-out flex flex-col shadow-2xl animate-slide-in-left`}
+        } bg-gradient-to-b from-gray-900 to-gray-800 text-white transition-all duration-500 ease-in-out flex flex-col shadow-2xl animate-slide-in-left max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:z-10`}
       >
-        <div className="p-6 flex items-center justify-between">
+        <div className="p-6 flex items-center justify-between max-md:hidden">
           {sidebarOpen && (
             <h1 className="text-xl font-bold transition-all duration-300 animate-fade-in-up">
               Dashboard
@@ -63,7 +74,7 @@ export default function Dashboard() {
             {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
-        <nav className="flex-1">
+        <nav className="flex-1 max-md:flex">
           {menuItems.map((item, idx) => (
             <button
               key={item.id}
@@ -71,7 +82,7 @@ export default function Dashboard() {
                 setActiveTab(item.id);
                 navigate(item.link);
               }}
-              className={`w-full flex items-center px-6 py-3 transition-all duration-300 hover:pl-8 ${
+              className={`max-md:px-2 max-md:justify-center w-full flex items-center  px-6 py-3 transition-all duration-300 hover:pl-8 ${
                 activeTab === item.id
                   ? "bg-blue-600 border-l-4 border-blue-400 shadow-lg"
                   : "hover:bg-gray-700"
@@ -96,7 +107,7 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="flex-1 overflow-auto">
-        <div className="p-8">
+        <div className="p-8 max-md:p-5">
           {/* Header */}
           <div className="mb-8 animate-slide-in-right">
             <h2 className="text-3xl font-bold text-gray-900 mb-2 transition-all duration-500">
