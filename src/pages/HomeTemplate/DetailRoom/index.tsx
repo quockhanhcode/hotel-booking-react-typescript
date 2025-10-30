@@ -416,8 +416,6 @@ export default function RoomDetail() {
 
                 {/* Booking Form */}
                 <div className="space-y-4 mb-6">
-                 
-
                   <div className="border-2 border-gray-200 rounded-xl p-3 hover:border-purple-300 transition-colors">
                     <label className="text-xs font-semibold text-gray-600 block mb-1">
                       Số khách
