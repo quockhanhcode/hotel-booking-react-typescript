@@ -43,8 +43,8 @@ export default function Dashboard() {
       icon: Calendar,
       link: "booking-management",
     },
-    { id: "users", label: "Người Dùng", icon: Users, link: "user-management" },
-    { id: "rooms", label: "Phòng", icon: Home, link: "room-management" },
+    { id: "users", label: "Quản lý Người dùng", icon: Users, link: "user-management" },
+    { id: "rooms", label: "Quản lý Phòng", icon: Home, link: "room-management" },
     {
       id: "locations",
       label: "Vị Trí",
@@ -54,7 +54,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden max-md:pb-12">
+    <div className="flex h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 overflow-hidden max-md:pb-12">
       {/* Sidebar */}
       <aside
         className={`${
