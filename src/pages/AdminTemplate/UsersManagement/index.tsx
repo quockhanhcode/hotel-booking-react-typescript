@@ -1,12 +1,12 @@
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import clsx from "clsx";
 import {
   Download,
@@ -78,19 +78,19 @@ export default function UsersManagement() {
   return (
     <>
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-fade-in-up">
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-fade-in-up md:gap-4 lg:gap-6">
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200 md:p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-600 mb-1">Tổng người dùng</p>
               <p className="text-3xl font-bold text-blue-800">{users.length}</p>
             </div>
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center md:size-10 lg:size-12">
               <UserPlus className="w-6 h-6 text-blue-600" />
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200 md:p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-600 mb-1">Quản lí</p>
@@ -98,18 +98,18 @@ export default function UsersManagement() {
                 {users.filter((u) => u.role === "Admin").length}
               </p>
             </div>
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center md:size-10 lg:size-12">
               <span className="text-2xl">👑</span>
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
+        <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200 md:p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-600 mb-1">Người dùng</p>
               <p className="text-3xl font-bold text-gray-600">20</p>
             </div>
-            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center md:size-10 lg:size-12">
               <User className="w-6 h-6 text-gray-600" />
             </div>
           </div>
@@ -118,50 +118,43 @@ export default function UsersManagement() {
 
       {/* Filters and Actions */}
       <div className="bg-white rounded-xl shadow-sm p-6 mb-6 border border-slate-200 animate-fade-in-up max-sm:p-5">
-      <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-        <div className="flex max-sm:flex-col flex-1 gap-4 w-full lg:w-auto">
-          {/* Search Input */}
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 pointer-events-none" />
-            <Input
-              type="text"
-              placeholder="Tìm kiếm theo tên hoặc email..."
-              className="pl-10 h-11"
-            />
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+          <div className="flex max-sm:flex-col flex-1 gap-4 w-full lg:w-auto">
+            {/* Search Input */}
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 pointer-events-none" />
+              <Input
+                type="text"
+                placeholder="Tìm kiếm theo tên hoặc email..."
+                className="pl-10 h-11"
+              />
+            </div>
+
+            {/* Filter Select */}
+            <div className="relative w-[180px] max-sm:w-full">
+              <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 pointer-events-none" />
+              <Select defaultValue="all">
+                <SelectTrigger className="pl-10 !h-11 w-full">
+                  <SelectValue placeholder="Tất cả vai trò" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tất cả vai trò</SelectItem>
+                  <SelectItem value="admin">Quản lí</SelectItem>
+                  <SelectItem value="user">Người dùng</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
-          {/* Filter Select */}
-          <div className="relative w-[180px] max-sm:w-full">
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 pointer-events-none" />
-            <Select defaultValue="all">
-              <SelectTrigger className="pl-10 !h-11 w-full">
-                <SelectValue placeholder="Tất cả vai trò" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tất cả vai trò</SelectItem>
-                <SelectItem value="admin">Quản lí</SelectItem>
-                <SelectItem value="user">Người dùng</SelectItem>
-              </SelectContent>
-            </Select>
+          {/* ⚙️ Actions */}
+          <div className="flex gap-3">
+            <Button className="flex items-center gap-2 h-11 bg-blue-600 hover:bg-blue-700 shadow-sm">
+              <Plus className="w-4 h-4" />
+              Thêm người dùng
+            </Button>
           </div>
-        </div>
-
-        {/* ⚙️ Actions */}
-        <div className="flex gap-3 max-sm:flex-col">
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 h-11 border-slate-300 hover:bg-slate-50"
-          >
-            <Download className="w-4 h-4" />
-            Xuất file
-          </Button>
-          <Button className="flex items-center gap-2 h-11 bg-blue-600 hover:bg-blue-700 shadow-sm">
-            <Plus className="w-4 h-4" />
-            Thêm người dùng
-          </Button>
         </div>
       </div>
-    </div>
 
       {/* Users Table */}
       <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 animate-fade-in-up">
