@@ -416,70 +416,7 @@ export default function RoomDetail() {
 
                 {/* Booking Form */}
                 <div className="space-y-4 mb-6">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="border-2 border-gray-200 rounded-xl p-3 hover:border-purple-300 transition-colors">
-                      <Label className="text-xs font-semibold text-gray-600 block mb-1">
-                        Nhận phòng
-                      </Label>
-                      <Popover open={open1} onOpenChange={setOpen1}>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            id="date"
-                            className="w-full justify-between font-medium border-none shadow-none pl-0"
-                          >
-                            {date1 ? date1?.toLocaleDateString() : "dd/mm/yyyy"}
-                            <CalendarDays />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent
-                          className="w-auto overflow-hidden p-0"
-                          align="start"
-                        >
-                          <Calendar
-                            mode="single"
-                            selected={date1}
-                            captionLayout="dropdown"
-                            onSelect={(date) => {
-                              setDate1(date);
-                              setOpen1(false);
-                            }}
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </div>
-                    <div className="border-2 border-gray-200 rounded-xl p-3 hover:border-purple-300 transition-colors">
-                      <Label className="text-xs font-semibold text-gray-600 block mb-1">
-                        Trả phòng
-                      </Label>
-                      <Popover open={open2} onOpenChange={setOpen2}>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            id="date"
-                            className="w-full justify-between font-medium border-none shadow-none pl-0"
-                          >
-                            {date2 ? date2?.toLocaleDateString() : "dd/mm/yyyy"}
-                            <CalendarDays />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent
-                          className="w-auto overflow-hidden p-0"
-                          align="start"
-                        >
-                          <Calendar
-                            mode="single"
-                            selected={date2}
-                            captionLayout="dropdown"
-                            onSelect={(date) => {
-                              setDate2(date);
-                              setOpen2(false);
-                            }}
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </div>
-                  </div>
+                 
 
                   <div className="border-2 border-gray-200 rounded-xl p-3 hover:border-purple-300 transition-colors">
                     <label className="text-xs font-semibold text-gray-600 block mb-1">
