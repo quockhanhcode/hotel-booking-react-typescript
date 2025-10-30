@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, MapPin, Users, ChevronDownIcon } from "lucide-react";
+import { Search, MapPin, Users, CalendarDays } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -69,8 +69,8 @@ export default function MainVisual() {
                       id="date"
                       className="w-48 justify-between font-normal text-black pt-3 pb-3 h-full"
                     >
-                      {date1 ? date1.toLocaleDateString() : "Select date"}
-                      <ChevronDownIcon />
+                      {date1 ? date1.toLocaleDateString() : "Chọn ngày"}
+                      <CalendarDays />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent
@@ -103,8 +103,8 @@ export default function MainVisual() {
                       id="date"
                       className="w-48 justify-between font-normal text-black pt-3 pb-3 h-full"
                     >
-                      {date2 ? date2.toLocaleDateString() : "Select date"}
-                      <ChevronDownIcon />
+                      {date2 ? date2.toLocaleDateString() : "Chọn ngày"}
+                      <CalendarDays />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent
