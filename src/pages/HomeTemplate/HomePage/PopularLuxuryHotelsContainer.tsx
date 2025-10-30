@@ -1,5 +1,4 @@
-import React, { useRef } from "react";
-import { MapPin, Star, ChevronRight, TrendingUp } from "lucide-react";
+import { MapPin, Star, TrendingUp, CircleArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function PopularLuxuryHotelsContainer() {
@@ -151,9 +150,9 @@ export default function PopularLuxuryHotelsContainer() {
         </div>
 
         <div className="text-center mt-12">
-          <Button className="cursor-pointer inline-flex items-center text-xl bg-blue-600 text-white px-8 py-8 rounded-xl font-semibold hover:bg-blue-700 transition shadow-lg">
+          <Button className="cursor-pointer capitalize inline-flex items-center text-xl bg-blue-600 text-white px-8 py-8 rounded-xl font-semibold hover:bg-blue-700 transition shadow-lg">
             Khám phá thêm khách sạn
-            <ChevronRight className="w-5 h-5 ml-2" />
+            <CircleArrowRight />
           </Button>
         </div>
       </div>

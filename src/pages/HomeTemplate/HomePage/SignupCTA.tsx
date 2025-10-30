@@ -16,7 +16,7 @@ export default function SignupCTA() {
           <Input
             type="email"
             placeholder="Nhập email của bạn"
-            className="flex-1 py-4 px-2.5 rounded-xl !text-white bg-white h-full"
+            className="flex-1 py-4 px-2.5 rounded-xl text-black bg-white h-full"
           />
           <Button className="bg-white cursor-pointer text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition shadow-lg whitespace-nowrap h-full">
             Đăng ký

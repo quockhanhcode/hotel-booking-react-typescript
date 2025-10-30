@@ -13,6 +13,7 @@ const HomePage = lazy(() => import("@/pages/HomeTemplate/HomePage"));
 const AboutPage = lazy(() => import("@/pages/HomeTemplate/About"));
 const ContactPage = lazy(() => import("@/pages/HomeTemplate/Contact"));
 const DetailRoom = lazy(() => import("@/pages/HomeTemplate/DetailRoom"));
+const LocationPage = lazy(() => import("@/pages/HomeTemplate/Location"));
 const UsersManagement = lazy(
   () => import("@/pages/AdminTemplate/UsersManagement")
 );
@@ -86,6 +87,10 @@ export const routes: RouteObject[] = [
       {
         path: "/detail-room",
         element: withSuspense(DetailRoom),
+      },
+      {
+        path: "/location",
+        element: withSuspense(LocationPage),
       },
     ],
   },
