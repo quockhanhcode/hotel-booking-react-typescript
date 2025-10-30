@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Search, MapPin, Users, ChevronDownIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -12,15 +12,13 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { Label } from "@radix-ui/react-label";
 
 export default function MainVisual() {
-  const [rooms, setRooms] = useState("1");
-
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [date1, setDate1] = React.useState<Date | undefined>(undefined);
@@ -46,9 +44,9 @@ export default function MainVisual() {
         <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
             <div className="lg:col-span-2">
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
+              <Label className="block text-sm font-semibold text-slate-700 mb-2">
                 Địa điểm / Khách sạn
-              </label>
+              </Label>
               <div className="relative">
                 <MapPin className="absolute left-4 top-3.5 text-slate-400 w-5 h-5" />
                 <Input
@@ -60,9 +58,9 @@ export default function MainVisual() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
+              <Label className="block text-sm font-semibold text-slate-700 mb-2">
                 Nhận phòng
-              </label>
+              </Label>
               <div className="relative">
                 <Popover open={open1} onOpenChange={setOpen1}>
                   <PopoverTrigger asChild>
@@ -94,16 +92,16 @@ export default function MainVisual() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
+              <Label className="block text-sm font-semibold text-slate-700 mb-2">
                 Trả phòng
-              </label>
+              </Label>
               <div className="relative">
                 <Popover open={open2} onOpenChange={setOpen2}>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
                       id="date"
-                      className="w-48 justify-between font-normal text-black text-black pt-3 pb-3 h-full"
+                      className="w-48 justify-between font-normal text-black pt-3 pb-3 h-full"
                     >
                       {date2 ? date2.toLocaleDateString() : "Select date"}
                       <ChevronDownIcon />
@@ -128,14 +126,14 @@ export default function MainVisual() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
+              <Label className="block text-sm font-semibold text-slate-700 mb-2">
                 Khách & Phòng
-              </label>
+              </Label>
               <div className="grid grid-cols-2 gap-2">
                 <div className="relative">
                   <Users className="absolute left-3 top-3.5 text-slate-400 w-4 h-4" />
                   <Select>
-                    <SelectTrigger className="w-full !h-full text-black pt-3 pb-3">
+                    <SelectTrigger className="w-full !h-full text-black pt-3 pb-3 pl-12">
                       <SelectValue placeholder="Select a fruit" />
                     </SelectTrigger>
                     <SelectContent>
