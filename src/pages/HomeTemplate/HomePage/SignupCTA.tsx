@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import React from "react";
 
 export default function SignupCTA() {
@@ -10,15 +12,15 @@ export default function SignupCTA() {
         <p className="text-xl text-blue-100 mb-8">
           Giảm ngay 15% cho đơn đặt phòng đầu tiên + Tích điểm thành viên
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-          <input
+        <div className="flex flex-col items-center sm:flex-row gap-4 justify-center max-w-md mx-auto">
+          <Input
             type="email"
             placeholder="Nhập email của bạn"
-            className="flex-1 px-6 py-4 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-white"
+            className="flex-1 py-4 px-2.5 rounded-xl !text-white bg-white h-full"
           />
-          <button className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition shadow-lg whitespace-nowrap">
+          <Button className="bg-white cursor-pointer text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition shadow-lg whitespace-nowrap h-full">
             Đăng ký
-          </button>
+          </Button>
         </div>
       </div>
     </section>

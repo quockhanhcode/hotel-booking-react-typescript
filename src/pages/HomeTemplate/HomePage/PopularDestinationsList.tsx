@@ -1,5 +1,6 @@
 import React from "react";
 import { ChevronRight, Plane, Building2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function PopularDestinationsList() {
   const destinations = [
@@ -44,9 +45,9 @@ export default function PopularDestinationsList() {
               Khám phá những địa điểm du lịch được yêu thích nhất
             </p>
           </div>
-          <button className="hidden md:flex items-center text-blue-600 font-semibold hover:text-blue-700">
+          <Button className="cursor-pointer !p-0 hidden md:flex items-center text-blue-600 font-semibold hover:text-blue-700 bg-transparent hover:bg-transparent">
             Xem tất cả <ChevronRight className="w-5 h-5 ml-1" />
-          </button>
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

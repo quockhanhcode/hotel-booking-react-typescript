@@ -16,6 +16,7 @@ import {
   TrendingUp,
   Award,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function RoomListing() {
   const [rooms] = useState([
@@ -137,7 +138,7 @@ export default function RoomListing() {
                 Ưu đãi đặc biệt hôm nay
               </span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-6xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
               Khám Phá Phòng Của Bạn
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -235,7 +236,7 @@ export default function RoomListing() {
                       {/* Price Tag */}
                       <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-5 py-3 rounded-2xl shadow-xl">
                         <div className="flex items-baseline gap-1">
-                          <span className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                          <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
                             ${room.giaTien}
                           </span>
                           <span className="text-gray-600 text-sm font-medium">
@@ -316,10 +317,10 @@ export default function RoomListing() {
                       </div>
 
                       {/* CTA Button */}
-                      <button className="w-full bg-gradient-to-r bg-[#1945CC] text-white py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden group">
+                      <Button className="w-full bg-gradient-to-r bg-[#1945CC] text-white py-7 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden group">
                         <span className="relative z-10">Đặt phòng ngay</span>
                         <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      </button>
+                      </Button>
                     </div>
                   </div>
 
@@ -340,21 +341,6 @@ export default function RoomListing() {
                 </div>
               );
             })}
-          </div>
-
-          {/* Bottom CTA */}
-          <div className="mt-16 text-center">
-            <div className="inline-block bg-white rounded-3xl shadow-2xl p-8 max-w-2xl">
-              <h3 className="text-3xl font-bold mb-3 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Không tìm thấy phòng phù hợp?
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Để lại thông tin, chúng tôi sẽ tìm phòng phù hợp nhất cho bạn
-              </p>
-              <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-2xl font-bold hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                Liên hệ ngay
-              </button>
-            </div>
           </div>
         </div>
       </div>
