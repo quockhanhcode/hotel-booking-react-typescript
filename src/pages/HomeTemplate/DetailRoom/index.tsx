@@ -137,7 +137,7 @@ export default function RoomDetail() {
   const rules = [
     { label: "Nhận phòng", value: "Sau 14:00", icon: Clock },
     { label: "Trả phòng", value: "Trước 12:00", icon: Clock },
-    { label: "Hủy đặt phòng", value: "Miễn phí trước 48h", icon: Calendar },
+    { label: "Hủy đặt phòng", value: "Miễn phí trước 48h", icon: CalendarDays },
     {
       label: "Chính sách",
       value: "Không hút thuốc, Không thú cưng",
@@ -487,7 +487,6 @@ export default function RoomDetail() {
                     </label>
                     <select
                       value={guests}
-                      onChange={(e) => setGuests(e.target.value)}
                       className="w-full text-sm font-semibold outline-none"
                     >
                       {[...Array(room.khach)].map((_, i) => (
