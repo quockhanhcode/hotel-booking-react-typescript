@@ -49,7 +49,7 @@ export default function Header() {
             </Button>
             <Button
               onClick={() => navigate("/auth/register")}
-              className="bg-blue-600 cursor-pointer text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition shadow-md font-medium"
+              className="hidden lg:inline-flex bg-blue-600 cursor-pointer text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition shadow-md font-medium"
             >
               Đăng ký
             </Button>
@@ -81,6 +81,12 @@ export default function Header() {
             </Button>
             <Button className="cursor-pointer  block text-slate-700 hover:bg-transparent font-medium bg-transparent mb-0 p-0">
               Liên hệ
+            </Button>
+            <Button className="cursor-pointer  block text-slate-700 hover:bg-transparent font-medium bg-transparent mb-0 p-0">
+              Đăng Nhập
+            </Button>
+            <Button className="cursor-pointer  block text-slate-700 hover:bg-transparent font-medium bg-transparent mb-0 p-0">
+              Đăng Xuất
             </Button>
           </nav>
         </div>

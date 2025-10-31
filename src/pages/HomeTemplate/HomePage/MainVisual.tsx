@@ -67,7 +67,7 @@ export default function MainVisual() {
                     <Button
                       variant="outline"
                       id="date"
-                      className="w-48 justify-between font-normal text-black pt-3 pb-3 h-full"
+                      className="w-full h-full justify-between font-normal text-black pt-3 pb-3 "
                     >
                       {date1 ? date1.toLocaleDateString() : "Chọn ngày"}
                       <CalendarDays />
@@ -101,7 +101,7 @@ export default function MainVisual() {
                     <Button
                       variant="outline"
                       id="date"
-                      className="w-48 justify-between font-normal text-black pt-3 pb-3 h-full"
+                      className="w-full h-full justify-between font-normal text-black pt-3 pb-3 "
                     >
                       {date2 ? date2.toLocaleDateString() : "Chọn ngày"}
                       <CalendarDays />
