@@ -10,6 +10,8 @@ import {
   Users,
   Home,
   MapPin,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -20,7 +22,7 @@ export default function Dashboard() {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setSidebarOpen(false);
-      } 
+      }
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -30,26 +32,47 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   const menuItems = [
-    { id: "overview", label: "Tổng Quan", icon: BarChart3, link: "" },
+    {
+      id: "overview",
+      label: "Tổng Quan",
+      icon: BarChart3,
+      link: "",
+      icpage: "📊",
+    },
     {
       id: "comments",
       label: "Bình Luận",
       icon: MessageSquare,
       link: "comment-management",
+      icpage: "💬",
     },
     {
       id: "bookings",
       label: "Đặt Phòng",
       icon: Calendar,
       link: "booking-management",
+      icpage: "📅",
     },
-    { id: "users", label: "Quản lý Người dùng", icon: Users, link: "user-management" },
-    { id: "rooms", label: "Quản lý Phòng", icon: Home, link: "room-management" },
+    {
+      id: "users",
+      label: "Quản lý Người dùng",
+      icon: Users,
+      link: "user-management",
+      icpage: "👥",
+    },
+    {
+      id: "rooms",
+      label: "Quản lý Phòng",
+      icon: Home,
+      link: "room-management",
+      icpage: "🏠",
+    },
     {
       id: "locations",
-      label: "Vị Trí",
+      label: "Quản lý Vị Trí",
       icon: MapPin,
       link: "location-management",
+      icpage: "🗺️",
     },
   ];
 
@@ -58,51 +81,94 @@ export default function Dashboard() {
       {/* Sidebar */}
       <aside
         className={`${
-          sidebarOpen ? "w-64" : "w-20"
-        } bg-gradient-to-b from-gray-900 to-gray-800 text-white transition-all duration-500 ease-in-out flex flex-col shadow-2xl animate-slide-in-left max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:z-10`}
+          sidebarOpen ? "w-72" : "w-20"
+        } bg-white border-r border-slate-200 transition-all duration-300 ease-in-out flex flex-col shadow-lg relative max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:z-50 max-md:h-16 max-md:flex-row max-md:border-r-0 max-md:border-t`}
       >
-        <div className="p-6 flex items-center justify-between max-md:hidden">
+        {/* Logo Section */}
+        <div className="p-6 border-b border-slate-200 flex items-center justify-between max-md:hidden">
           {sidebarOpen && (
-            <h1 className="text-xl font-bold transition-all duration-300 animate-fade-in-up">
-              Dashboard
-            </h1>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
+                <Home className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-slate-800">
+                  AirBnB Admin
+                </h1>
+                <p className="text-xs text-slate-500">Dashboard</p>
+              </div>
+            </div>
           )}
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="hover:bg-gray-700 p-2 rounded transition-all duration-300 hover:scale-110 active:scale-95"
-          >
-            {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          {!sidebarOpen && (
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg mx-auto">
+              <Home className="w-5 h-5 text-white" />
+            </div>
+          )}
         </div>
-        <nav className="flex-1 max-md:flex">
-          {menuItems.map((item, idx) => (
+
+        {/* Navigation */}
+        <nav className="flex-1 py-4 px-3 overflow-y-auto max-md:flex max-md:flex-row max-md:py-0 max-md:px-0 max-md:justify-around max-md:items-center">
+          {menuItems.map((item) => (
             <button
               key={item.id}
               onClick={() => {
                 setActiveTab(item.id);
                 navigate(item.link);
               }}
-              className={`max-md:px-2 max-md:justify-center w-full flex items-center  px-6 py-3 transition-all duration-300 hover:pl-8 ${
+              className={`w-full flex items-center gap-3 px-4 py-3 mb-1 rounded-lg transition-all duration-200 group max-md:flex-col max-md:gap-1 max-md:py-2 max-md:mb-0 max-md:rounded-none ${
                 activeTab === item.id
-                  ? "bg-blue-600 border-l-4 border-blue-400 shadow-lg"
-                  : "hover:bg-gray-700"
-              } group`}
-              style={{ transitionDelay: `${idx * 50}ms` }}
+                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
+                  : "text-slate-600 hover:bg-slate-100"
+              }`}
             >
               <item.icon
                 size={20}
-                className={`transition-transform duration-300 ${
+                className={`flex-shrink-0 transition-transform duration-200 ${
                   activeTab === item.id ? "scale-110" : "group-hover:scale-110"
                 }`}
               />
               {sidebarOpen && (
-                <span className="ml-3 transition-all duration-300">
+                <span className="text-sm font-medium truncate max-md:text-xs max-md:block">
                   {item.label}
                 </span>
+              )}
+              {!sidebarOpen && (
+                <span className="md:hidden text-xs">{item.label}</span>
               )}
             </button>
           ))}
         </nav>
+
+        {/* Toggle Button */}
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="absolute -right-3 top-24 w-6 h-6 bg-white border border-slate-200 rounded-full shadow-md flex items-center justify-center hover:bg-slate-50 transition-colors max-md:hidden"
+        >
+          {sidebarOpen ? (
+            <ChevronLeft size={14} className="text-slate-600" />
+          ) : (
+            <ChevronRight size={14} className="text-slate-600" />
+          )}
+        </button>
+
+        {/* Footer */}
+        {sidebarOpen && (
+          <div className="p-4 border-t border-slate-200 max-md:hidden">
+            <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-semibold">
+                A
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-slate-800 truncate">
+                  Admin User
+                </p>
+                <p className="text-xs text-slate-500 truncate">
+                  admin@airbnb.com
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </aside>
 
       {/* Main Content */}
@@ -111,6 +177,7 @@ export default function Dashboard() {
           {/* Header */}
           <div className="mb-8 animate-slide-in-right">
             <h2 className="text-3xl font-bold text-gray-900 mb-2 transition-all duration-500">
+              {menuItems.find((ic) => ic.id === activeTab)?.icpage}{" "}
               {menuItems.find((m) => m.id === activeTab)?.label}
             </h2>
             <p className="text-gray-600">Quản lý thông tin hệ thống</p>
