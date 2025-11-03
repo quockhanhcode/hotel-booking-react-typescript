@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import { useNavigate } from "react-router";
 import {
-  Menu,
-  X,
   BarChart3,
   MessageSquare,
   Calendar,
