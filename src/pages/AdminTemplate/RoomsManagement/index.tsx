@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Search,
   Plus,
@@ -88,7 +88,7 @@ const RoomsManagement = () => {
 
   const [viewMode, setViewMode] = useState("grid");
   const [showDetailModal, setShowDetailModal] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [detailRoom, setDetailRoom] = useState(null);
 
   // Handler Amenities
   const getAmenities = (room) => {
@@ -140,14 +140,14 @@ const RoomsManagement = () => {
   };
 
   const showRoomDetail = (room) => {
-    setSelectedRoom(room);
+    setDetailRoom(room);
     setShowDetailModal(true);
   };
 
   return (
     <>
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 animate-fade-in-up md:gap-3 lg:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in-up md:gap-3 lg:gap-6">
         <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200 md:p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -237,7 +237,7 @@ const RoomsManagement = () => {
       </div>
 
       {viewMode === "grid" ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4 lg:gap-6 animate-fade-in-up">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-4 lg:gap-6 animate-fade-in-up">
           {rooms.map((room) => (
             <div
               key={room.id}
@@ -414,7 +414,7 @@ const RoomsManagement = () => {
         </div>
       )}
 
-      {showDetailModal && selectedRoom && (
+      {showDetailModal && detailRoom && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-slate-200 p-6 flex items-center justify-between">
@@ -430,36 +430,36 @@ const RoomsManagement = () => {
             </div>
             <div className="p-6">
               <img
-                src={selectedRoom.hinhAnh}
-                alt={selectedRoom.tenPhong}
+                src={detailRoom.hinhAnh}
+                alt={detailRoom.tenPhong}
                 className="w-full h-64 object-cover rounded-xl mb-6"
               />
               <h3 className="text-2xl font-bold text-slate-800 mb-4">
-                {selectedRoom.tenPhong}
+                {detailRoom.tenPhong}
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 <div className="text-center p-4 bg-blue-50 rounded-lg">
                   <Users className="w-6 h-6 mx-auto mb-2 text-blue-600" />
                   <div className="text-sm text-slate-600">Khách</div>
-                  <div className="text-xl font-bold">{selectedRoom.khach}</div>
+                  <div className="text-xl font-bold">{detailRoom.khach}</div>
                 </div>
                 <div className="text-center p-4 bg-green-50 rounded-lg">
                   <span className="text-2xl mb-2 block">🛏️</span>
                   <div className="text-sm text-slate-600">Phòng ngủ</div>
                   <div className="text-xl font-bold">
-                    {selectedRoom.phongNgu}
+                    {detailRoom.phongNgu}
                   </div>
                 </div>
                 <div className="text-center p-4 bg-purple-50 rounded-lg">
                   <span className="text-2xl mb-2 block">🛏️</span>
                   <div className="text-sm text-slate-600">Giường</div>
-                  <div className="text-xl font-bold">{selectedRoom.giuong}</div>
+                  <div className="text-xl font-bold">{detailRoom.giuong}</div>
                 </div>
                 <div className="text-center p-4 bg-orange-50 rounded-lg">
                   <span className="text-2xl mb-2 block">🚿</span>
                   <div className="text-sm text-slate-600">Phòng tắm</div>
                   <div className="text-xl font-bold">
-                    {selectedRoom.phongTam}
+                    {detailRoom.phongTam}
                   </div>
                 </div>
               </div>
@@ -467,7 +467,7 @@ const RoomsManagement = () => {
               <div className="mb-6">
                 <h4 className="text-lg font-bold text-slate-800 mb-3">Mô tả</h4>
                 <p className="text-slate-600 leading-relaxed">
-                  {selectedRoom.moTa}
+                  {detailRoom.moTa}
                 </p>
               </div>
 
@@ -476,7 +476,7 @@ const RoomsManagement = () => {
                   Tiện nghi
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {getAmenities(selectedRoom).map((amenity, idx) => (
+                  {getAmenities(detailRoom).map((amenity, idx) => (
                     <div
                       key={idx}
                       className="flex items-center gap-2 p-3 bg-slate-50 rounded-lg"
@@ -494,7 +494,7 @@ const RoomsManagement = () => {
                 <div>
                   <div className="text-sm text-slate-600">Giá phòng</div>
                   <div className="text-3xl font-bold text-blue-600">
-                    ${selectedRoom.giaTien}
+                    ${detailRoom.giaTien}
                     <span className="text-lg text-slate-600">/đêm</span>
                   </div>
                 </div>
