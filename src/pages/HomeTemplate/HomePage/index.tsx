@@ -13,7 +13,7 @@ export default function HomePage() {
       <CounterNumber />
       <PopularDestinationsList />
       <PopularLuxuryHotelsContainer />
-      <TrendingDestinations/>
+      <TrendingDestinations />
       <WhyChooseLuxeStay />
       <SignupCTA />
     </div>

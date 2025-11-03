@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Building2, Menu, X } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 export default function Header() {
@@ -11,7 +11,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-3">
-            <div className="w-11 h-11 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-11 h-11 bg-gradient-to from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg">
               <Building2 className="w-6 h-6 text-white" />
             </div>
             <div>
