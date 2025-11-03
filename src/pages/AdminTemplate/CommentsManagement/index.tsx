@@ -1,5 +1,19 @@
-import React, { useState } from 'react';
-import { Search, Plus, Edit, Trash2, MessageSquare, Star, User, Calendar, Filter, Download, X, ThumbsUp, Flag } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  Search,
+  Plus,
+  Edit,
+  Trash2,
+  MessageSquare,
+  Star,
+  User,
+  Calendar,
+  Filter,
+  Download,
+  X,
+  ThumbsUp,
+  Flag,
+} from "lucide-react";
 
 const CommentsManagement = () => {
   const [comments, setComments] = useState([
@@ -9,7 +23,8 @@ const CommentsManagement = () => {
       noiDung: "Phòng tốt",
       saoBinhLuan: 5,
       tenNguoiBinhLuan: "erjhhY",
-      avatar: "http://sc04.alicdn.com/kf/Hc3e61591078043e09dba7808a6be5d21n.jpg"
+      avatar:
+        "http://sc04.alicdn.com/kf/Hc3e61591078043e09dba7808a6be5d21n.jpg",
     },
     {
       id: 10319,
@@ -17,7 +32,7 @@ const CommentsManagement = () => {
       noiDung: "Okkk baybi",
       saoBinhLuan: 5,
       tenNguoiBinhLuan: "hoàng vũ",
-      avatar: ""
+      avatar: "",
     },
     {
       id: 11345,
@@ -25,7 +40,7 @@ const CommentsManagement = () => {
       noiDung: "Ok",
       saoBinhLuan: 5,
       tenNguoiBinhLuan: "hoàng vũ",
-      avatar: ""
+      avatar: "",
     },
     {
       id: 11360,
@@ -33,7 +48,7 @@ const CommentsManagement = () => {
       noiDung: "beautiful",
       saoBinhLuan: 4,
       tenNguoiBinhLuan: "john doe",
-      avatar: ""
+      avatar: "",
     },
     {
       id: 11361,
@@ -41,7 +56,7 @@ const CommentsManagement = () => {
       noiDung: "Phòng rất sạch sẽ và tiện nghi",
       saoBinhLuan: 5,
       tenNguoiBinhLuan: "Minh Anh",
-      avatar: ""
+      avatar: "",
     },
     {
       id: 11362,
@@ -49,7 +64,7 @@ const CommentsManagement = () => {
       noiDung: "Dịch vụ tốt nhưng giá hơi cao",
       saoBinhLuan: 3,
       tenNguoiBinhLuan: "Thanh Tùng",
-      avatar: ""
+      avatar: "",
     },
     {
       id: 11363,
@@ -57,7 +72,7 @@ const CommentsManagement = () => {
       noiDung: "Không tốt lắm, cần cải thiện",
       saoBinhLuan: 2,
       tenNguoiBinhLuan: "Lan Hương",
-      avatar: ""
+      avatar: "",
     },
     {
       id: 11364,
@@ -65,13 +80,13 @@ const CommentsManagement = () => {
       noiDung: "Perfect place! Highly recommended",
       saoBinhLuan: 5,
       tenNguoiBinhLuan: "Emma Watson",
-      avatar: ""
-    }
+      avatar: "",
+    },
   ]);
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterRating, setFilterRating] = useState('all');
-  const [viewMode, setViewMode] = useState('grid');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterRating, setFilterRating] = useState("all");
+  const [viewMode, setViewMode] = useState("grid");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
@@ -79,16 +94,16 @@ const CommentsManagement = () => {
 
   const formatDate = (dateString) => {
     try {
-      if (dateString.includes('/')) {
+      if (dateString.includes("/")) {
         return dateString;
       }
       const date = new Date(dateString);
-      return date.toLocaleString('vi-VN', { 
-        day: '2-digit', 
-        month: '2-digit', 
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+      return date.toLocaleString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       });
     } catch {
       return dateString;
@@ -96,32 +111,48 @@ const CommentsManagement = () => {
   };
 
   const getDefaultAvatar = (name) => {
-    const colors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-pink-500', 'bg-orange-500', 'bg-teal-500'];
-    const initial = name ? name.charAt(0).toUpperCase() : 'U';
+    const colors = [
+      "bg-blue-500",
+      "bg-green-500",
+      "bg-purple-500",
+      "bg-pink-500",
+      "bg-orange-500",
+      "bg-teal-500",
+    ];
+    const initial = name ? name.charAt(0).toUpperCase() : "U";
     const colorIndex = name ? name.length % colors.length : 0;
     return { initial, color: colors[colorIndex] };
   };
 
   const getRatingColor = (rating) => {
-    if (rating >= 4) return 'text-green-600';
-    if (rating === 3) return 'text-yellow-600';
-    return 'text-red-600';
+    if (rating >= 4) return "text-green-600";
+    if (rating === 3) return "text-yellow-600";
+    return "text-red-600";
   };
 
   const getRatingBadge = (rating) => {
-    if (rating >= 4) return { bg: 'bg-green-100', text: 'text-green-800', label: 'Tích cực' };
-    if (rating === 3) return { bg: 'bg-yellow-100', text: 'text-yellow-800', label: 'Trung bình' };
-    return { bg: 'bg-red-100', text: 'text-red-800', label: 'Tiêu cực' };
+    if (rating >= 4)
+      return { bg: "bg-green-100", text: "text-green-800", label: "Tích cực" };
+    if (rating === 3)
+      return {
+        bg: "bg-yellow-100",
+        text: "text-yellow-800",
+        label: "Trung bình",
+      };
+    return { bg: "bg-red-100", text: "text-red-800", label: "Tiêu cực" };
   };
 
-  const filteredComments = comments.filter(comment => {
-    const matchesSearch = 
+  const filteredComments = comments.filter((comment) => {
+    const matchesSearch =
       comment.noiDung.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      comment.tenNguoiBinhLuan.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      comment.tenNguoiBinhLuan
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
       comment.id.toString().includes(searchTerm);
-    
-    const matchesRating = filterRating === 'all' || comment.saoBinhLuan === parseInt(filterRating);
-    
+
+    const matchesRating =
+      filterRating === "all" || comment.saoBinhLuan === parseInt(filterRating);
+
     return matchesSearch && matchesRating;
   });
 
@@ -131,7 +162,7 @@ const CommentsManagement = () => {
   };
 
   const confirmDelete = () => {
-    setComments(comments.filter(c => c.id !== commentToDelete.id));
+    setComments(comments.filter((c) => c.id !== commentToDelete.id));
     setShowDeleteDialog(false);
     setCommentToDelete(null);
   };
@@ -143,19 +174,25 @@ const CommentsManagement = () => {
 
   const stats = {
     total: comments.length,
-    fiveStar: comments.filter(c => c.saoBinhLuan === 5).length,
-    fourStar: comments.filter(c => c.saoBinhLuan === 4).length,
-    threeStar: comments.filter(c => c.saoBinhLuan === 3).length,
-    lowStar: comments.filter(c => c.saoBinhLuan <= 2).length,
-    avgRating: (comments.reduce((sum, c) => sum + c.saoBinhLuan, 0) / comments.length).toFixed(1)
+    fiveStar: comments.filter((c) => c.saoBinhLuan === 5).length,
+    fourStar: comments.filter((c) => c.saoBinhLuan === 4).length,
+    threeStar: comments.filter((c) => c.saoBinhLuan === 3).length,
+    lowStar: comments.filter((c) => c.saoBinhLuan <= 2).length,
+    avgRating: (
+      comments.reduce((sum, c) => sum + c.saoBinhLuan, 0) / comments.length
+    ).toFixed(1),
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-fuchsia-50 p-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-800 mb-2">💬 Quản lý Bình Luận</h1>
-          <p className="text-slate-600">Quản lý và theo dõi đánh giá từ khách hàng</p>
+          <h1 className="text-4xl font-bold text-slate-800 mb-2">
+            💬 Quản lý Bình Luận
+          </h1>
+          <p className="text-slate-600">
+            Quản lý và theo dõi đánh giá từ khách hàng
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
@@ -163,7 +200,9 @@ const CommentsManagement = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-600 mb-1">Tổng bình luận</p>
-                <p className="text-3xl font-bold text-slate-800">{stats.total}</p>
+                <p className="text-3xl font-bold text-slate-800">
+                  {stats.total}
+                </p>
               </div>
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
                 <MessageSquare className="w-6 h-6 text-purple-600" />
@@ -174,7 +213,9 @@ const CommentsManagement = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-600 mb-1">Đánh giá TB</p>
-                <p className="text-3xl font-bold text-amber-600">{stats.avgRating}</p>
+                <p className="text-3xl font-bold text-amber-600">
+                  {stats.avgRating}
+                </p>
               </div>
               <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
                 <Star className="w-6 h-6 text-amber-600 fill-amber-600" />
@@ -185,7 +226,9 @@ const CommentsManagement = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-600 mb-1">5 sao</p>
-                <p className="text-3xl font-bold text-green-600">{stats.fiveStar}</p>
+                <p className="text-3xl font-bold text-green-600">
+                  {stats.fiveStar}
+                </p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                 <span className="text-2xl">⭐</span>
@@ -196,7 +239,9 @@ const CommentsManagement = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-600 mb-1">4-3 sao</p>
-                <p className="text-3xl font-bold text-blue-600">{stats.fourStar + stats.threeStar}</p>
+                <p className="text-3xl font-bold text-blue-600">
+                  {stats.fourStar + stats.threeStar}
+                </p>
               </div>
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                 <ThumbsUp className="w-6 h-6 text-blue-600" />
@@ -207,7 +252,9 @@ const CommentsManagement = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-slate-600 mb-1">Dưới 3 sao</p>
-                <p className="text-3xl font-bold text-red-600">{stats.lowStar}</p>
+                <p className="text-3xl font-bold text-red-600">
+                  {stats.lowStar}
+                </p>
               </div>
               <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                 <Flag className="w-6 h-6 text-red-600" />
@@ -245,14 +292,14 @@ const CommentsManagement = () => {
             <div className="flex gap-3">
               <div className="flex bg-slate-100 rounded-lg p-1">
                 <button
-                  onClick={() => setViewMode('grid')}
-                  className={`px-3 py-1.5 rounded-md transition-colors text-sm ${viewMode === 'grid' ? 'bg-white shadow-sm' : ''}`}
+                  onClick={() => setViewMode("grid")}
+                  className={`px-3 py-1.5 rounded-md transition-colors text-sm ${viewMode === "grid" ? "bg-white shadow-sm" : ""}`}
                 >
                   Grid
                 </button>
                 <button
-                  onClick={() => setViewMode('list')}
-                  className={`px-3 py-1.5 rounded-md transition-colors text-sm ${viewMode === 'list' ? 'bg-white shadow-sm' : ''}`}
+                  onClick={() => setViewMode("list")}
+                  className={`px-3 py-1.5 rounded-md transition-colors text-sm ${viewMode === "list" ? "bg-white shadow-sm" : ""}`}
                 >
                   List
                 </button>
@@ -265,53 +312,68 @@ const CommentsManagement = () => {
           </div>
         </div>
 
-        {viewMode === 'grid' ? (
+        {viewMode === "grid" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredComments.map((comment) => {
               const avatar = getDefaultAvatar(comment.tenNguoiBinhLuan);
               const ratingBadge = getRatingBadge(comment.saoBinhLuan);
-              
+
               return (
-                <div key={comment.id} className="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-lg transition-all p-5">
+                <div
+                  key={comment.id}
+                  className="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-lg transition-all p-5"
+                >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       {comment.avatar ? (
-                        <img 
-                          src={comment.avatar} 
+                        <img
+                          src={comment.avatar}
                           alt={comment.tenNguoiBinhLuan}
                           className="w-12 h-12 rounded-full object-cover"
                           onError={(e) => {
-                            e.target.style.display = 'none';
-                            e.target.nextSibling.style.display = 'flex';
+                            e.target.style.display = "none";
+                            e.target.nextSibling.style.display = "flex";
                           }}
                         />
                       ) : null}
-                      <div className={`w-12 h-12 rounded-full ${avatar.color} flex items-center justify-center text-white font-bold text-lg ${comment.avatar ? 'hidden' : ''}`}>
+                      <div
+                        className={`w-12 h-12 rounded-full ${avatar.color} flex items-center justify-center text-white font-bold text-lg ${comment.avatar ? "hidden" : ""}`}
+                      >
                         {avatar.initial}
                       </div>
                       <div>
-                        <div className="font-semibold text-slate-800">{comment.tenNguoiBinhLuan}</div>
-                        <div className="text-xs text-slate-500">ID: {comment.id}</div>
+                        <div className="font-semibold text-slate-800">
+                          {comment.tenNguoiBinhLuan}
+                        </div>
+                        <div className="text-xs text-slate-500">
+                          ID: {comment.id}
+                        </div>
                       </div>
                     </div>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${ratingBadge.bg} ${ratingBadge.text}`}>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${ratingBadge.bg} ${ratingBadge.text}`}
+                    >
                       {ratingBadge.label}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-1 mb-3">
                     {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className={`w-4 h-4 ${i < comment.saoBinhLuan ? 'text-amber-400 fill-amber-400' : 'text-slate-300'}`}
+                      <Star
+                        key={i}
+                        className={`w-4 h-4 ${i < comment.saoBinhLuan ? "text-amber-400 fill-amber-400" : "text-slate-300"}`}
                       />
                     ))}
-                    <span className={`ml-2 font-semibold ${getRatingColor(comment.saoBinhLuan)}`}>
+                    <span
+                      className={`ml-2 font-semibold ${getRatingColor(comment.saoBinhLuan)}`}
+                    >
                       {comment.saoBinhLuan}/5
                     </span>
                   </div>
 
-                  <p className="text-slate-700 mb-4 line-clamp-3">{comment.noiDung}</p>
+                  <p className="text-slate-700 mb-4 line-clamp-3">
+                    {comment.noiDung}
+                  </p>
 
                   <div className="flex items-center justify-between pt-4 border-t border-slate-200">
                     <div className="flex items-center gap-2 text-sm text-slate-500">
@@ -319,13 +381,13 @@ const CommentsManagement = () => {
                       <span>{formatDate(comment.ngayBinhLuan)}</span>
                     </div>
                     <div className="flex gap-2">
-                      <button 
+                      <button
                         onClick={() => showCommentDetail(comment)}
                         className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       >
                         <Edit className="w-4 h-4" />
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleDelete(comment)}
                         className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       >
@@ -343,60 +405,85 @@ const CommentsManagement = () => {
               <table className="w-full">
                 <thead className="bg-slate-50 border-b border-slate-200">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Người dùng</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Nội dung</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Đánh giá</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">Ngày</th>
-                    <th className="px-6 py-4 text-right text-xs font-semibold text-slate-600 uppercase">Thao tác</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">
+                      Người dùng
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">
+                      Nội dung
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">
+                      Đánh giá
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">
+                      Ngày
+                    </th>
+                    <th className="px-6 py-4 text-right text-xs font-semibold text-slate-600 uppercase">
+                      Thao tác
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200">
                   {filteredComments.map((comment) => {
                     const avatar = getDefaultAvatar(comment.tenNguoiBinhLuan);
                     const ratingBadge = getRatingBadge(comment.saoBinhLuan);
-                    
+
                     return (
-                      <tr key={comment.id} className="hover:bg-slate-50 transition-colors">
+                      <tr
+                        key={comment.id}
+                        className="hover:bg-slate-50 transition-colors"
+                      >
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             {comment.avatar ? (
-                              <img 
-                                src={comment.avatar} 
+                              <img
+                                src={comment.avatar}
                                 alt={comment.tenNguoiBinhLuan}
                                 className="w-10 h-10 rounded-full object-cover"
                                 onError={(e) => {
-                                  e.target.style.display = 'none';
-                                  e.target.nextSibling.style.display = 'flex';
+                                  e.target.style.display = "none";
+                                  e.target.nextSibling.style.display = "flex";
                                 }}
                               />
                             ) : null}
-                            <div className={`w-10 h-10 rounded-full ${avatar.color} flex items-center justify-center text-white font-bold ${comment.avatar ? 'hidden' : ''}`}>
+                            <div
+                              className={`w-10 h-10 rounded-full ${avatar.color} flex items-center justify-center text-white font-bold ${comment.avatar ? "hidden" : ""}`}
+                            >
                               {avatar.initial}
                             </div>
                             <div>
-                              <div className="font-medium text-slate-900">{comment.tenNguoiBinhLuan}</div>
-                              <div className="text-sm text-slate-500">ID: {comment.id}</div>
+                              <div className="font-medium text-slate-900">
+                                {comment.tenNguoiBinhLuan}
+                              </div>
+                              <div className="text-sm text-slate-500">
+                                ID: {comment.id}
+                              </div>
                             </div>
                           </div>
                         </td>
                         <td className="px-6 py-4 max-w-md">
-                          <p className="text-slate-700 line-clamp-2">{comment.noiDung}</p>
+                          <p className="text-slate-700 line-clamp-2">
+                            {comment.noiDung}
+                          </p>
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
                             <div className="flex items-center gap-1">
                               {[...Array(5)].map((_, i) => (
-                                <Star 
-                                  key={i} 
-                                  className={`w-3 h-3 ${i < comment.saoBinhLuan ? 'text-amber-400 fill-amber-400' : 'text-slate-300'}`}
+                                <Star
+                                  key={i}
+                                  className={`w-3 h-3 ${i < comment.saoBinhLuan ? "text-amber-400 fill-amber-400" : "text-slate-300"}`}
                                 />
                               ))}
                             </div>
-                            <span className={`font-semibold ${getRatingColor(comment.saoBinhLuan)}`}>
+                            <span
+                              className={`font-semibold ${getRatingColor(comment.saoBinhLuan)}`}
+                            >
                               {comment.saoBinhLuan}
                             </span>
                           </div>
-                          <span className={`mt-1 inline-block px-2 py-1 rounded-full text-xs font-medium ${ratingBadge.bg} ${ratingBadge.text}`}>
+                          <span
+                            className={`mt-1 inline-block px-2 py-1 rounded-full text-xs font-medium ${ratingBadge.bg} ${ratingBadge.text}`}
+                          >
                             {ratingBadge.label}
                           </span>
                         </td>
@@ -405,13 +492,13 @@ const CommentsManagement = () => {
                         </td>
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button 
+                            <button
                               onClick={() => showCommentDetail(comment)}
                               className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
                             >
                               <Edit className="w-4 h-4" />
                             </button>
-                            <button 
+                            <button
                               onClick={() => handleDelete(comment)}
                               className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
                             >
@@ -432,8 +519,10 @@ const CommentsManagement = () => {
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
             <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full">
               <div className="border-b border-slate-200 p-6 flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-slate-800">Chi tiết bình luận</h2>
-                <button 
+                <h2 className="text-2xl font-bold text-slate-800">
+                  Chi tiết bình luận
+                </h2>
+                <button
                   onClick={() => setShowDetailModal(false)}
                   className="p-2 hover:bg-slate-100 rounded-lg"
                 >
@@ -443,22 +532,28 @@ const CommentsManagement = () => {
               <div className="p-6">
                 <div className="flex items-center gap-4 mb-6 p-4 bg-slate-50 rounded-lg">
                   {selectedComment.avatar ? (
-                    <img 
-                      src={selectedComment.avatar} 
+                    <img
+                      src={selectedComment.avatar}
                       alt={selectedComment.tenNguoiBinhLuan}
                       className="w-16 h-16 rounded-full object-cover"
                       onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
+                        e.target.style.display = "none";
+                        e.target.nextSibling.style.display = "flex";
                       }}
                     />
                   ) : null}
-                  <div className={`w-16 h-16 rounded-full ${getDefaultAvatar(selectedComment.tenNguoiBinhLuan).color} flex items-center justify-center text-white font-bold text-2xl ${selectedComment.avatar ? 'hidden' : ''}`}>
+                  <div
+                    className={`w-16 h-16 rounded-full ${getDefaultAvatar(selectedComment.tenNguoiBinhLuan).color} flex items-center justify-center text-white font-bold text-2xl ${selectedComment.avatar ? "hidden" : ""}`}
+                  >
                     {getDefaultAvatar(selectedComment.tenNguoiBinhLuan).initial}
                   </div>
                   <div className="flex-1">
-                    <div className="text-xl font-bold text-slate-800">{selectedComment.tenNguoiBinhLuan}</div>
-                    <div className="text-sm text-slate-500">ID: {selectedComment.id}</div>
+                    <div className="text-xl font-bold text-slate-800">
+                      {selectedComment.tenNguoiBinhLuan}
+                    </div>
+                    <div className="text-sm text-slate-500">
+                      ID: {selectedComment.id}
+                    </div>
                   </div>
                 </div>
 
@@ -467,16 +562,20 @@ const CommentsManagement = () => {
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1">
                       {[...Array(5)].map((_, i) => (
-                        <Star 
-                          key={i} 
-                          className={`w-6 h-6 ${i < selectedComment.saoBinhLuan ? 'text-amber-400 fill-amber-400' : 'text-slate-300'}`}
+                        <Star
+                          key={i}
+                          className={`w-6 h-6 ${i < selectedComment.saoBinhLuan ? "text-amber-400 fill-amber-400" : "text-slate-300"}`}
                         />
                       ))}
                     </div>
-                    <span className={`text-2xl font-bold ${getRatingColor(selectedComment.saoBinhLuan)}`}>
+                    <span
+                      className={`text-2xl font-bold ${getRatingColor(selectedComment.saoBinhLuan)}`}
+                    >
                       {selectedComment.saoBinhLuan}/5
                     </span>
-                    <span className={`ml-2 px-3 py-1 rounded-full text-sm font-medium ${getRatingBadge(selectedComment.saoBinhLuan).bg} ${getRatingBadge(selectedComment.saoBinhLuan).text}`}>
+                    <span
+                      className={`ml-2 px-3 py-1 rounded-full text-sm font-medium ${getRatingBadge(selectedComment.saoBinhLuan).bg} ${getRatingBadge(selectedComment.saoBinhLuan).text}`}
+                    >
                       {getRatingBadge(selectedComment.saoBinhLuan).label}
                     </span>
                   </div>
@@ -485,7 +584,9 @@ const CommentsManagement = () => {
                 <div className="mb-6">
                   <div className="text-sm text-slate-600 mb-2">Nội dung</div>
                   <div className="p-4 bg-slate-50 rounded-lg">
-                    <p className="text-slate-800 leading-relaxed">{selectedComment.noiDung}</p>
+                    <p className="text-slate-800 leading-relaxed">
+                      {selectedComment.noiDung}
+                    </p>
                   </div>
                 </div>
 
@@ -493,7 +594,9 @@ const CommentsManagement = () => {
                   <div className="text-sm text-slate-600 mb-2">Thời gian</div>
                   <div className="flex items-center gap-2 text-slate-800">
                     <Calendar className="w-5 h-5" />
-                    <span className="font-medium">{formatDate(selectedComment.ngayBinhLuan)}</span>
+                    <span className="font-medium">
+                      {formatDate(selectedComment.ngayBinhLuan)}
+                    </span>
                   </div>
                 </div>
 
@@ -501,7 +604,7 @@ const CommentsManagement = () => {
                   <button className="flex-1 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                     Chỉnh sửa
                   </button>
-                  <button 
+                  <button
                     onClick={() => {
                       setShowDetailModal(false);
                       handleDelete(selectedComment);
@@ -519,9 +622,12 @@ const CommentsManagement = () => {
         {showDeleteDialog && commentToDelete && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
             <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
-              <h2 className="text-xl font-bold text-slate-800 mb-2">Xác nhận xóa</h2>
+              <h2 className="text-xl font-bold text-slate-800 mb-2">
+                Xác nhận xóa
+              </h2>
               <p className="text-slate-600 mb-6">
-                Bạn có chắc muốn xóa bình luận của <strong>{commentToDelete.tenNguoiBinhLuan}</strong>?
+                Bạn có chắc muốn xóa bình luận của{" "}
+                <strong>{commentToDelete.tenNguoiBinhLuan}</strong>?
               </p>
               <div className="flex gap-3">
                 <button

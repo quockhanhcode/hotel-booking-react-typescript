@@ -1,3 +1,4 @@
+import { Heart } from "lucide-react";
 import React from "react";
 
 export default function LocationPage() {
@@ -14,9 +15,9 @@ export default function LocationPage() {
               alt="Quận 1"
               className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-top from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <button className="absolute top-3 right-3 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white">
-              <i className="far fa-heart text-gray-700"></i>
+              <Heart />
             </button>
           </div>
           <div className="mt-3">
@@ -32,9 +33,9 @@ export default function LocationPage() {
               alt="Cái Răng"
               className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-top from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <button className="absolute top-3 right-3 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white">
-              <i className="far fa-heart text-gray-700"></i>
+              <Heart />
             </button>
           </div>
           <div className="mt-3">
@@ -50,9 +51,9 @@ export default function LocationPage() {
               alt="Hòn Rùa"
               className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <button className="absolute top-3 right-3 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white">
-              <i className="far fa-heart text-gray-700"></i>
+              <Heart className="far fa-heart text-gray-700" />
             </button>
           </div>
           <div className="mt-3">
@@ -70,7 +71,7 @@ export default function LocationPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <button className="absolute top-3 right-3 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white">
-              <i className="far fa-heart text-gray-700"></i>
+              <Heart className="far fa-heart text-gray-700" />
             </button>
           </div>
           <div className="mt-3">
@@ -88,7 +89,7 @@ export default function LocationPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <button className="absolute top-3 right-3 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white">
-              <i className="far fa-heart text-gray-700"></i>
+              <Heart className="far fa-heart text-gray-700" />
             </button>
           </div>
           <div className="mt-3">
@@ -106,7 +107,7 @@ export default function LocationPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <button className="absolute top-3 right-3 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white">
-              <i className="far fa-heart text-gray-700"></i>
+              <Heart className="far fa-heart text-gray-700" />
             </button>
           </div>
           <div className="mt-3">
@@ -124,7 +125,7 @@ export default function LocationPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <button className="absolute top-3 right-3 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white">
-              <i className="far fa-heart text-gray-700"></i>
+              <Heart className="far fa-heart text-gray-700" />
             </button>
           </div>
           <div className="mt-3">
@@ -142,7 +143,7 @@ export default function LocationPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <button className="absolute top-3 right-3 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white">
-              <i className="far fa-heart text-gray-700"></i>
+              <Heart className="far fa-heart text-gray-700" />
             </button>
           </div>
           <div className="mt-3">

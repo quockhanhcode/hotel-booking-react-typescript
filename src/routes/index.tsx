@@ -14,6 +14,7 @@ const AboutPage = lazy(() => import("@/pages/HomeTemplate/About"));
 const ContactPage = lazy(() => import("@/pages/HomeTemplate/Contact"));
 const DetailRoom = lazy(() => import("@/pages/HomeTemplate/DetailRoom"));
 const LocationPage = lazy(() => import("@/pages/HomeTemplate/Location"));
+const SalePage = lazy(() => import("@/pages/HomeTemplate/Sale"));
 const UsersManagement = lazy(
   () => import("@/pages/AdminTemplate/UsersManagement")
 );
@@ -91,6 +92,10 @@ export const routes: RouteObject[] = [
       {
         path: "/location",
         element: withSuspense(LocationPage),
+      },
+      {
+        path: "/sale",
+        element: withSuspense(SalePage),
       },
     ],
   },

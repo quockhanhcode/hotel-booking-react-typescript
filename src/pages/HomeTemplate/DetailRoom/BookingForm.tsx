@@ -16,8 +16,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Swal from "sweetalert2";
+
+// or via CommonJS
 
 export default function BookingForm() {
+  const handleBook = () => {
+    Swal.fire({
+      title: "Xác Nhận Đặt Phòng ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Có",
+      cancelButtonText: "Thoát",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
+  };
   const [open1, setOpen1] = React.useState(false);
   const [date1, setDate1] = React.useState<Date | undefined>(undefined);
   const [open2, setOpen2] = React.useState(false);
@@ -155,7 +177,10 @@ export default function BookingForm() {
           </div>
 
           {/* Book Button */}
-          <button className="w-full bg-gradient-to-r from-blue-400 to-cyan-300 text-white py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 mb-4 relative overflow-hidden group">
+          <button
+            onClick={() => handleBook()}
+            className="w-full bg-gradient-to-r from-blue-400 to-cyan-300 text-white py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 mb-4 relative overflow-hidden group"
+          >
             <span className="relative z-10">Đặt phòng ngay</span>
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </button>
