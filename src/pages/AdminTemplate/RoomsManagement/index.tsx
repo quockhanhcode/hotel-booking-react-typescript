@@ -147,7 +147,7 @@ const RoomsManagement = () => {
   return (
     <>
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in-up md:gap-3 lg:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8 animate-fade-in-up md:gap-3 lg:gap-6">
         <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200 md:p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -236,6 +236,7 @@ const RoomsManagement = () => {
         </div>
       </div>
 
+      {/* Rooms Table && Grid */}
       {viewMode === "grid" ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-4 lg:gap-6 animate-fade-in-up">
           {rooms.map((room) => (
