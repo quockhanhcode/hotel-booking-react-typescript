@@ -18,7 +18,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 1200) {
         setSidebarOpen(false);
       }
     };
@@ -80,7 +80,7 @@ export default function Dashboard() {
       <aside
         className={`${
           sidebarOpen ? "w-72" : "w-20"
-        } bg-white border-r border-slate-200 transition-all duration-300 ease-in-out flex flex-col shadow-lg relative max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:z-50 max-md:h-16 max-md:flex-row max-md:border-r-0 max-md:border-t`}
+        } bg-white border-r border-slate-200 transition-all duration-300 ease-in-out flex flex-col shadow-lg relative max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:z-50 max-md:h-13 max-md:flex-row max-md:border-r-0 max-md:border-t`}
       >
         {/* Logo Section */}
         <div className={`${sidebarOpen ? "p-6" : "p-3"} border-b border-slate-200 flex items-center justify-between max-md:hidden`}>
@@ -113,7 +113,7 @@ export default function Dashboard() {
                 setActiveTab(item.id);
                 navigate(item.link);
               }}
-              className={`w-full flex items-center gap-3 px-4 py-3 mb-1 rounded-lg transition-all duration-200 group max-md:flex-col max-md:gap-1 max-md:py-2 max-md:mb-0 max-md:rounded-none ${
+              className={`w-full flex items-center gap-3 px-4 py-3 mb-1 rounded-lg transition-all duration-200 group max-md:h-full max-md:justify-center max-md:flex-col max-md:gap-1 max-md:py-2 max-md:mb-0 max-md:rounded-none ${
                 activeTab === item.id
                   ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
                   : "text-slate-600 hover:bg-slate-100"
@@ -129,9 +129,6 @@ export default function Dashboard() {
                 <span className="text-sm font-medium truncate max-md:text-xs max-md:block">
                   {item.label}
                 </span>
-              )}
-              {!sidebarOpen && (
-                <span className="md:hidden text-xs">{item.label}</span>
               )}
             </button>
           ))}

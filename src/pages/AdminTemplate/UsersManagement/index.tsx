@@ -72,7 +72,7 @@ export default function UsersManagement() {
 
   // API
   const { data: dataUsersList } = useQuery({
-    queryKey: ["user-list"],
+    queryKey: ["users-list"],
     queryFn: () => getUsersListApi(),
   });
   console.log("🎄 ~ UsersManagement ~ dataUsersList:", dataUsersList);
