@@ -1,3 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
+import clsx from "clsx";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,9 +10,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import clsx from "clsx";
 import {
-  Download,
   Edit,
   Filter,
   MoreVertical,
@@ -19,6 +20,7 @@ import {
   User,
   UserPlus,
 } from "lucide-react";
+import { getUsersListApi } from "@/services/users.api";
 
 export default function UsersManagement() {
   const users = [
@@ -67,6 +69,13 @@ export default function UsersManagement() {
       role: "USER",
     },
   ];
+
+  // API
+  const { data: dataUsersList } = useQuery({
+    queryKey: ["user-list"],
+    queryFn: () => getUsersListApi(),
+  });
+  console.log("🎄 ~ UsersManagement ~ dataUsersList:", dataUsersList);
 
   const getRoleBadgeColor = (role: string) => {
     return clsx({
