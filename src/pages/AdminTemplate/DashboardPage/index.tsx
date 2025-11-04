@@ -243,14 +243,14 @@ const DashboardOverview = () => {
     <>
       {/* Welcome Section */}
       <div className="mb-8 p-6 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg text-white">
-        <div className="flex items-center justify-between">
+        <div className="flex max-md:flex-col-reverse max-md:text-center items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Xin chào, Admin! 👋</h1>
-            <p className="text-blue-100">
+            <h1 className="text-xl md:text-3xl font-bold md:mb-2">Xin chào, Admin! 👋</h1>
+            <p className="text-blue-100 max-md:hidden">
               Đây là tổng quan hệ thống của bạn hôm nay
             </p>
           </div>
-          <div className="text-right">
+          <div className="max-md:mb-2 md:text-right">
             <div className="text-sm text-blue-100">Hôm nay</div>
             <div className="text-2xl font-bold">
               {new Date().toLocaleDateString("vi-VN")}
@@ -565,7 +565,7 @@ const DashboardOverview = () => {
         {/* Recent Bookings */}
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div className="p-6 border-b border-slate-200 flex items-center justify-between">
-            <h3 className="text-lg font-bold text-slate-800">
+            <h3 className="text-md font-bold text-slate-800">
               Lịch sửa đặt phòng
             </h3>
             <button className="text-blue-600 text-sm font-medium hover:underline flex items-center gap-1">
@@ -669,7 +669,7 @@ const DashboardOverview = () => {
           </button>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full min-w-[700px]">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-slate-600 uppercase">
