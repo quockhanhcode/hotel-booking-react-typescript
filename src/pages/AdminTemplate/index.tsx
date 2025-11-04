@@ -83,13 +83,13 @@ export default function Dashboard() {
         } bg-white border-r border-slate-200 transition-all duration-300 ease-in-out flex flex-col shadow-lg relative max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:z-50 max-md:h-16 max-md:flex-row max-md:border-r-0 max-md:border-t`}
       >
         {/* Logo Section */}
-        <div className="p-6 border-b border-slate-200 flex items-center justify-between max-md:hidden">
+        <div className={`${sidebarOpen ? "p-6" : "p-3"} border-b border-slate-200 flex items-center justify-between max-md:hidden`}>
           {sidebarOpen && (
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
                 <Home className="w-5 h-5 text-white" />
               </div>
-              <div>
+              <div className="">
                 <h1 className="text-lg font-bold text-slate-800">
                   AirBnB Admin
                 </h1>
