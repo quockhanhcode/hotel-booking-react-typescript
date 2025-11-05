@@ -1,172 +1,247 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Star, Send, Smile } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Label } from "@/components/ui/label";
+import { format, parse } from "date-fns";
+import { vi } from "date-fns/locale";
 
-export default function CommentLayout() {
+// 🧩 Hàm parse ngày linh hoạt
+const parseDate = (dateString: string): Date | null => {
+  if (!dateString) return null;
+
+  // 1️⃣ ISO format (ví dụ: 2024-10-08T15:49:50.196Z)
+  if (!isNaN(Date.parse(dateString))) {
+    return new Date(dateString);
+  }
+
+  // 2️⃣ Dạng dd/MM/yyyy HH:mm:ss
+  const parsed = parse(dateString, "dd/MM/yyyy HH:mm:ss", new Date());
+  if (!isNaN(parsed.getTime())) {
+    return parsed;
+  }
+
+  // 3️⃣ Dạng chuỗi tự nhiên (vd: Tue Dec 17 2024 16:55:09 GMT+0700)
+  const native = new Date(dateString);
+  if (!isNaN(native.getTime())) {
+    return native;
+  }
+
+  // 4️⃣ Fallback
+  return new Date();
+};
+
+// 🧩 Hàm format an toàn
+const formatDateSafe = (dateString: string) => {
+  const date = parseDate(dateString);
+  if (!date || isNaN(date.getTime())) return "Không xác định";
+  return format(date, "dd/MM/yyyy", { locale: vi });
+};
+
+export default function CommentSection() {
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [newRating, setNewRating] = useState(5);
+
+  // Fake API data
+  const fakeApiResponse = {
+    statusCode: 200,
+    content: [
+      {
+        id: 8111,
+        maPhong: 0,
+        maNguoiBinhLuan: 0,
+        ngayBinhLuan: "2024-10-08T15:49:50.196Z",
+        noiDung: "Phòng rộng, view đẹp lắm chủ nhiệt tình",
+        saoBinhLuan: 5,
+      },
+      {
+        id: 8237,
+        maPhong: 1,
+        maNguoiBinhLuan: 1,
+        ngayBinhLuan: "13/11/2024 09:43:33",
+        noiDung: "Phòng tốt",
+        saoBinhLuan: 5,
+      },
+      {
+        id: 8254,
+        maPhong: 233104,
+        maNguoiBinhLuan: 43792,
+        ngayBinhLuan: "2024-11-23T18:59:15.026Z",
+        noiDung: "Đồ đạc hơi cũ nhưng vẫn ổn",
+        saoBinhLuan: 3,
+      },
+      {
+        id: 8307,
+        maPhong: 0,
+        maNguoiBinhLuan: 0,
+        ngayBinhLuan: "Tue Dec 17 2024 16:55:09 GMT+0700 (Indochina Time)",
+        noiDung: "Tuyệt Vời!",
+        saoBinhLuan: 5,
+      },
+    ],
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setComments(fakeApiResponse.content);
+    }, 500);
+  }, []);
+
+  const handleSubmitComment = () => {
+    if (newComment.trim()) {
+      const newCmt = {
+        id: Date.now(),
+        maPhong: 0,
+        maNguoiBinhLuan: 999,
+        ngayBinhLuan: new Date().toISOString(),
+        noiDung: newComment,
+        saoBinhLuan: newRating,
+      };
+      setComments([newCmt, ...comments]);
+      setNewComment("");
+      setNewRating(5);
+    }
+  };
+
   return (
-    <div className="w-full mx-auto p-6 bg-[#DBEAFE] text-gray-100 rounded-xl">
-      {/* Title section */}
-      <div className="mb-6 flex items-center gap-3 border-b border-gray-700 pb-3">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="w-7 h-7 text-yellow-400"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M7.5 8.25h9m-9 3h6m-6 3h3m10.125 1.754A11.959 11.959 0 0112 21c-2.486 0-4.795-.758-6.708-2.054a9.744 9.744 0 01-.417-.3A11.955 11.955 0 012.25 12c0-2.52.782-4.847 2.124-6.746.127-.172.262-.34.403-.504A11.958 11.958 0 0112 3c2.486 0 4.795.758 6.708 2.054.144.1.285.203.423.309A11.955 11.955 0 0121.75 12a11.96 11.96 0 01-2.125 6.754z"
-          />
-        </svg>
-        <h1 className="text-2xl font-semibold text-amber-950">
-          Bình luận <span className="text-gray-400">(38)</span>
-        </h1>
-        <div className="ml-auto flex gap-2">
-          <button className="px-3 py-1 border border-gray-600 rounded-lg text-sm hover:bg-gray-800">
-            Bình luận
-          </button>
-          <button className="px-3 py-1 border border-gray-600 rounded-lg text-sm hover:bg-gray-800">
-            Đánh giá
-          </button>
-        </div>
+    <div className="w-full mx-auto bg-[#F6F7F8] rounded-3xl p-8 shadow-2xl transition-all">
+      {/* Header */}
+      <div className="mb-8">
+        <h2 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+            <Star className="w-6 h-6 text-white" />
+          </div>
+          Đánh giá & Bình luận
+        </h2>
+        <p className="text-gray-700">
+          Chia sẻ trải nghiệm của bạn về phòng này
+        </p>
       </div>
 
-      {/* Comment form */}
-      <section className="bg-white rounded-xl p-4 mb-6">
-        <div className="flex items-start gap-3 mb-3">
-          <img
-            src="https://i.pravatar.cc/50?u=bang92"
-            className="w-10 h-10 rounded-full"
-            alt="avatar"
-          />
-          <div className="text-black">
-            <p className="font-medium">Bình luận với tên</p>
-            <p className="font-semibold">Khánh Huỳnh Quốc</p>
-          </div>
-        </div>
-        <textarea
-          rows="5"
-          maxLength="1000"
-          className="w-full bg-transparent border border-gray-700 rounded-lg p-3 text-sm resize-none text-gray-200 placeholder-gray-500"
-          placeholder="Viết bình luận"
-        ></textarea>
-        <div className="flex items-center justify-between mt-2 text-sm text-gray-400">
-          <label className="flex items-center gap-2 cursor-pointer select-none">
-            <input type="checkbox" className="accent-yellow-400" />
-            <span>Tiết lộ?</span>
-          </label>
-          <button className="text-yellow-400 font-medium flex items-center gap-1">
-            Gửi
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-4 h-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5.25 12h13.5m0 0l-6.75-6.75M18.75 12l-6.75 6.75"
-              />
-            </svg>
-          </button>
-        </div>
-      </section>
+      {/* Comment Input */}
+      <Card className="bg-white rounded-2xl mb-8 shadow-lg border-2 border-gray-100">
+        <CardContent className="p-6">
+          <div className="flex gap-4 mb-4">
+            <Avatar className="w-12 h-12 border-2 border-blue-200">
+              <AvatarImage src="https://i.pravatar.cc/150?img=15" />
+              <AvatarFallback>KH</AvatarFallback>
+            </Avatar>
 
-      {/* Comments list */}
-      <section className="space-y-6">
-        {/* Comment item */}
-        {[
-          {
-            name: "Yeu nham me vo",
-            time: "3 ngày trước",
-            text: "** phim tâm lí biến thái vkl hối hận khi xem",
-            img: "https://i.pravatar.cc/40?img=68",
-            likes: 1,
-          },
-          {
-            name: "Le Tu",
-            time: "8 ngày trước",
-            text: "Phim hay 7/10 nhé. Có một đoạn reference với as above so below :)).",
-            img: "https://i.pravatar.cc/40?img=12",
-            likes: 1,
-          },
-          {
-            name: "Long Trường",
-            time: "8 ngày trước",
-            text: "coi series này giải trí phết, lại hóng các mùa sau",
-            img: "https://i.pravatar.cc/40?img=45",
-            likes: 0,
-          },
-        ].map((c, i) => (
-          <article key={i} className="flex gap-3">
-            <img src={c.img} className="w-10 h-10 rounded-full" alt="avatar" />
             <div className="flex-1">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="font-semibold text-amber-950">{c.name}</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-4 h-4 text-yellow-400"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 3v18m9-9H3"
-                  />
-                </svg>
-                <span className="text-sm text-gray-400">{c.time}</span>
-              </div>
-              <p className="text-amber-950 text-sm">{c.text}</p>
-              <div className="flex items-center gap-4 mt-2 text-gray-400 text-sm">
-                <button className="flex items-center gap-1 hover:text-yellow-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-4 h-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M14 9l-3-3m0 0l-3 3m3-3v12"
-                    />
-                  </svg>
-                  <span>{c.likes}</span>
-                </button>
-                <button className="flex items-center gap-1 hover:text-yellow-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-4 h-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M21 12c0 4.418-4.03 8-9 8a9 9 0 01-4.89-.93L3 20l1.07-3.11A8.965 8.965 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                    />
-                  </svg>
-                  Trả lời
-                </button>
-                <button className="flex items-center gap-1 hover:text-yellow-400">
-                  Thêm
-                </button>
-              </div>
+              <Textarea
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Chia sẻ trải nghiệm của bạn..."
+                className="min-h-[80px] border-2 border-gray-200 focus-visible:ring-blue-400 focus-visible:border-blue-400"
+              />
             </div>
-          </article>
-        ))}
-      </section>
+          </div>
+
+          <div className="flex items-center justify-between mt-2">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Label className="text-sm font-semibold text-gray-700">
+                  Đánh giá:
+                </Label>
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      onClick={() => setNewRating(star)}
+                      className="transition-transform hover:scale-110"
+                    >
+                      <Star
+                        className={`w-6 h-6 ${
+                          star <= newRating
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "text-gray-300"
+                        }`}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <Smile className="w-5 h-5" />
+              </Button>
+            </div>
+
+            <Button
+              onClick={handleSubmitComment}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+            >
+              <Send className="w-4 h-4" />
+              Gửi đánh giá
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Comments List */}
+      <div className="space-y-6">
+        {comments.length === 0 ? (
+          <p className="text-center text-gray-500">Chưa có bình luận nào.</p>
+        ) : (
+          comments.map((comment) => (
+            <Card
+              key={comment.id}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4 mb-4">
+                  <Avatar className="w-12 h-12 border-2 border-gray-200">
+                    <AvatarImage
+                      src={`https://i.pravatar.cc/150?img=${
+                        (comment.maNguoiBinhLuan % 70) + 1
+                      }`}
+                    />
+                    <AvatarFallback>U</AvatarFallback>
+                  </Avatar>
+
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-bold text-gray-900">
+                        Người dùng #{comment.maNguoiBinhLuan}
+                      </span>
+                      <div className="flex gap-0.5 ml-2">
+                        {[...Array(comment.saoBinhLuan)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <span className="text-sm text-gray-500">
+                      {formatDateSafe(comment.ngayBinhLuan)}
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-gray-700 mb-2 leading-relaxed">
+                  {comment.noiDung}
+                </p>
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
+
+      {/* Load More */}
+      <div className="text-center mt-8">
+        <Button
+          variant="outline"
+          className="bg-white text-gray-700 font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 border-2 border-gray-200 px-8 py-3"
+        >
+          Xem thêm bình luận
+        </Button>
+      </div>
     </div>
   );
 }
