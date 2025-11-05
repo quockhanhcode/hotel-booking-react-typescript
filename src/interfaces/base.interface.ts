@@ -3,5 +3,3 @@ export interface BaseApiResponse<T> {
   content: T;
   dateTime: Date;
 }
-
-
