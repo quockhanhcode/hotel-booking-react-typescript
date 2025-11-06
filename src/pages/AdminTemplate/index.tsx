@@ -11,9 +11,16 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { useAdmin } from "@/stores/adminTemplate.store";
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState("overview");
+  //Store
+  const activeTab = useAdmin((state) => state.tabSidebar);
+  console.log("🎄 ~ Dashboard ~ activeTab:", activeTab)
+  const setTabSidebar = useAdmin((state) => state.setTabSidebar)
+
+  // State
+  // const [activeTab, setActiveTab] = useState(tabSidebar);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
@@ -56,7 +63,7 @@ export default function Dashboard() {
       label: "Quản lý Người dùng",
       icon: Users,
       link: "user-management",
-      icpage: "👥",
+      icpage: "👤",
     },
     {
       id: "rooms",
@@ -110,7 +117,8 @@ export default function Dashboard() {
             <button
               key={item.id}
               onClick={() => {
-                setActiveTab(item.id);
+                // setActiveTab(item.id);
+                setTabSidebar(item.id)
                 navigate(item.link);
               }}
               className={`w-full flex items-center gap-3 px-4 py-3 mb-1 rounded-lg transition-all duration-200 group max-md:h-full max-md:justify-center max-md:flex-col max-md:gap-1 max-md:py-2 max-md:mb-0 max-md:rounded-none ${
