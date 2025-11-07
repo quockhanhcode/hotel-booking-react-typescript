@@ -1,4 +1,4 @@
-export interface Content {
+export interface Location {
   id: number;
   tenViTri: string;
   tinhThanh: string;

@@ -72,9 +72,8 @@ export default function UsersManagement() {
   ];
 
   // const [filterUser, setFilterUser] = useState();
-  
-  
-  const { data: dataUsersList } = useUsersListQuery(1,3);
+
+  const { data: dataUsersList } = useUsersListQuery(1, 3);
   console.log("🎄 ~ UsersManagement ~ dataUsersList:", dataUsersList?.data);
 
   const getRoleBadgeColor = (role: string) => {
