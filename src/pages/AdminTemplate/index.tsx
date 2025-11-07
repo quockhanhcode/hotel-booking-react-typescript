@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router-dom";
 import {
   BarChart3,
   MessageSquare,
@@ -11,18 +12,17 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { useAdmin } from "@/stores/adminTemplate.store";
 
 export default function Dashboard() {
-  //Store
-  const activeTab = useAdmin((state) => state.tabSidebar);
-  console.log("🎄 ~ Dashboard ~ activeTab:", activeTab);
-  const setTabSidebar = useAdmin((state) => state.setTabSidebar);
+  // Lib
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // State
-  // const [activeTab, setActiveTab] = useState(tabSidebar);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [tabSidebar, setTabSidebar] = useState("");
 
+  // Resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 1200) {
@@ -34,7 +34,11 @@ export default function Dashboard() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const navigate = useNavigate();
+  // location sidebar
+  useEffect(() => {
+    const local = location.pathname.split("/")[2];
+    setTabSidebar(local || "");
+  }, [location]);
 
   const menuItems = [
     {
@@ -119,12 +123,11 @@ export default function Dashboard() {
             <button
               key={item.id}
               onClick={() => {
-                // setActiveTab(item.id);
-                setTabSidebar(item.id);
+                setTabSidebar(item.link);
                 navigate(item.link);
               }}
               className={`w-full flex items-center gap-3 px-4 py-3 mb-1 rounded-lg transition-all duration-200 group max-md:h-full max-md:justify-center max-md:flex-col max-md:gap-1 max-md:py-2 max-md:mb-0 max-md:rounded-none ${
-                activeTab === item.id
+                tabSidebar === item.link
                   ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md"
                   : "text-slate-600 hover:bg-slate-100"
               }`}
@@ -132,7 +135,9 @@ export default function Dashboard() {
               <item.icon
                 size={20}
                 className={`flex-shrink-0 transition-transform duration-200 ${
-                  activeTab === item.id ? "scale-110" : "group-hover:scale-110"
+                  tabSidebar === item.link
+                    ? "scale-110"
+                    : "group-hover:scale-110"
                 }`}
               />
               {sidebarOpen && (
@@ -182,8 +187,8 @@ export default function Dashboard() {
           {/* Header */}
           <div className="mb-8 animate-slide-in-right">
             <h2 className="text-3xl font-bold text-gray-900 mb-2 transition-all duration-500">
-              {menuItems.find((ic) => ic.id === activeTab)?.icpage}{" "}
-              {menuItems.find((m) => m.id === activeTab)?.label}
+              {menuItems.find((ic) => ic.id === tabSidebar)?.icpage}{" "}
+              {menuItems.find((m) => m.id === tabSidebar)?.label}
             </h2>
             <p className="text-gray-600">Quản lý thông tin hệ thống</p>
           </div>
