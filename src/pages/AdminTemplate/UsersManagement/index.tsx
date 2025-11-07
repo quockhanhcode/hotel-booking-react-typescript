@@ -26,6 +26,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 const AccountManagement = () => {
+  // State
   const [users, setUsers] = useState([
     {
       id: 1,
@@ -72,7 +73,6 @@ const AccountManagement = () => {
       role: "USER",
     },
   ]);
-
   const [viewMode, setViewMode] = useState("grid");
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [detailUser, setDetailUser] = useState(null);
@@ -95,25 +95,28 @@ const AccountManagement = () => {
     setShowDetailModal(true);
   };
 
-  const getRoleBadge = (role) => {
+  // Style css && text && icon
+  const getRoleBadge = (role: string) => {
     return role === "ADMIN"
       ? {
           bg: "bg-purple-100",
-          text: "text-purple-800",
+          color: "text-purple-800",
           icon: <Crown className="w-3 h-3" />,
+          text: "Quản trị",
         }
       : {
           bg: "bg-blue-100",
-          text: "text-blue-800",
+          color: "text-blue-800",
           icon: <User className="w-3 h-3" />,
+          text: "Người dùng",
         };
   };
 
-  const getGenderLabel = (gender) => {
+  const getGenderLabel = (gender: boolean) => {
     return gender ? "Nam" : "Nữ";
   };
 
-  const getGenderIcon = (gender) => {
+  const getGenderIcon = (gender: boolean) => {
     return gender ? "👨" : "👩";
   };
 
@@ -263,10 +266,10 @@ const AccountManagement = () => {
                   </div>
                   <div className="absolute top-4 right-4">
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${roleBadge.bg} ${roleBadge.text}`}
+                      className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${roleBadge.bg} ${roleBadge.color}`}
                     >
                       {roleBadge.icon}
-                      {user.role}
+                      {roleBadge.text}
                     </span>
                   </div>
                 </div>
@@ -385,10 +388,10 @@ const AccountManagement = () => {
                       </td>
                       <td className="px-6 py-4">
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1 ${roleBadge.bg} ${roleBadge.text}`}
+                          className={`px-3 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1 ${roleBadge.bg} ${roleBadge.color}`}
                         >
                           {roleBadge.icon}
-                          {user.role}
+                          {roleBadge.text}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-right">
