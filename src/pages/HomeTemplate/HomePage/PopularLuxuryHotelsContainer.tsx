@@ -1,12 +1,15 @@
 import { Star, Wifi, Wind, Waves, Tv, Utensils, Car } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getListRoom } from "@/services/room.api";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function RoomList() {
   const { data: rooms } = useQuery({
     queryKey: ["getListRoom"], // A unique key for your query
     queryFn: getListRoom, // The function that fetches the data
   });
+  const navigate = useNavigate();
 
   return (
     <div className=" bg-white">
@@ -23,7 +26,7 @@ export default function RoomList() {
       {/* Main content */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {rooms?.map((room) => (
+          {rooms?.splice(0, 6).map((room) => (
             <div
               key={room.id}
               className="group cursor-pointer rounded-lg overflow-hidden bg-white border border-gray-200 hover:border-gray-300 transition-all hover:shadow-lg"
@@ -121,6 +124,12 @@ export default function RoomList() {
             </div>
           ))}
         </div>
+        <Button
+          onClick={() => navigate("/list-room")}
+          className="cursor-pointer table mx-auto mt-9 bg-blue-500 max-w-[350px] w-full h-full py-4 uppercase"
+        >
+          Xem thêm
+        </Button>
       </div>
     </div>
   );
