@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Search,
   Plus,
@@ -24,8 +24,9 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-
-const AccountManagement = () => {
+import { useUsersListQuery } from "@/hooks/useUserQuery";
+import type { UserItem } from "@/interfaces/user.interface";
+const UsersManagement = () => {
   // State
   const [users, setUsers] = useState([
     {
@@ -73,9 +74,16 @@ const AccountManagement = () => {
       role: "USER",
     },
   ]);
-  const [viewMode, setViewMode] = useState("grid");
+  const [viewMode, setViewMode] = useState("list"); //grid
   const [showDetailModal, setShowDetailModal] = useState(false);
-  const [detailUser, setDetailUser] = useState(null);
+  const [filteredUsers, setFilteredUsers] = useState<UserItem[] | null>(null);
+  const [detailUser, setDetailUser] = useState<UserItem | null>(null);
+  // API
+  const { data: dataUserList } = useUsersListQuery(1, 5);
+
+  useEffect(() => {
+    setFilteredUsers(dataUserList?.data ?? []);
+  }, [dataUserList]);
 
   // const [searchTerm, setSearchTerm] = useState("");
   // const [filterRole, setFilterRole] = useState("all");
@@ -90,7 +98,7 @@ const AccountManagement = () => {
   //   return matchesSearch && matchesRole;
   // });
 
-  const showUserDetail = (user) => {
+  const showUserDetail = (user: UserItem) => {
     setDetailUser(user);
     setShowDetailModal(true);
   };
@@ -248,7 +256,7 @@ const AccountManagement = () => {
       {/* Users Table && Grid */}
       {viewMode === "grid" ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {users.map((user) => {
+          {filteredUsers?.map((user) => {
             const roleBadge = getRoleBadge(user.role);
 
             return (
@@ -257,12 +265,23 @@ const AccountManagement = () => {
                 className="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-lg transition-all overflow-hidden"
               >
                 <div className="relative h-32 bg-gradient-to-r from-purple-500 to-indigo-600">
-                  <div className="absolute -bottom-12 left-6">
-                    <img
+                  <div className="absolute -bottom-12 left-6 w-24 h-24 rounded-full overflow-hidden">
+                    {/* <img
                       src={user.avatar}
                       alt={user.name}
-                      className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
-                    />
+                      className="w-full h-full rounded-full border-4 border-white shadow-lg"
+                    /> */}
+                    {user.avatar ? (
+                      <img
+                        src={user.avatar}
+                        alt={user.name}
+                        className="w-full h-full rounded-full border-4 border-white shadow-lg"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-medium text-lg text-white uppercase">
+                        {user.name.split("", 1)}
+                      </div>
+                    )}
                   </div>
                   <div className="absolute top-4 right-4">
                     <span
@@ -353,7 +372,7 @@ const AccountManagement = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
-                {users.map((user) => {
+                {filteredUsers?.map((user) => {
                   const roleBadge = getRoleBadge(user.role);
 
                   return (
@@ -363,11 +382,19 @@ const AccountManagement = () => {
                     >
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <img
-                            src={user.avatar}
-                            alt={user.name}
-                            className="w-12 h-12 rounded-full"
-                          />
+                          <div className="w-12 h-12 rounded-full overflow-hidden">
+                            {user.avatar ? (
+                              <img
+                                src={user.avatar}
+                                alt={user.name}
+                                className="w-full h-full rounded-full"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-medium text-lg text-white uppercase">
+                                {user.name.split("", 1)}
+                              </div>
+                            )}
+                          </div>
                           <div>
                             <div className="font-medium text-slate-900 flex items-center gap-2">
                               {user.name}
@@ -429,12 +456,23 @@ const AccountManagement = () => {
               >
                 <X className="w-5 h-5 text-white" />
               </button>
-              <div className="absolute -bottom-12 left-6">
-                <img
+              <div className="absolute -bottom-12 left-6 w-24 h-24 rounded-full overflow-hidden">
+                {/* <img
                   src={detailUser.avatar}
                   alt={detailUser.name}
                   className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
-                />
+                /> */}
+                {detailUser.avatar ? (
+                  <img
+                    src={detailUser.avatar}
+                    alt={detailUser.name}
+                    className="w-full h-full rounded-full border-4 border-white shadow-lg"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-medium text-lg text-white uppercase">
+                    {detailUser.name.split("", 1)}
+                  </div>
+                )}
               </div>
             </div>
             <div className="pt-16 px-6 pb-6">
@@ -524,4 +562,4 @@ const AccountManagement = () => {
   );
 };
 
-export default AccountManagement;
+export default UsersManagement;

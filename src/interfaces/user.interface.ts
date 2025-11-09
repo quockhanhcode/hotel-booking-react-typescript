@@ -6,7 +6,7 @@ export interface PagiUser<T> {
   data: T;
 }
 
-export interface User {
+export interface UserItem {
   id: number;
   name: string;
   email: string;
