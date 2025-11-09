@@ -12,7 +12,7 @@ export default function Header() {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-3">
             <div className="w-11 h-11 bg-gradient-to from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg">
-              <Building2 className="w-6 h-6 text-white" />
+              <Building2 className="w-6 h-6 " />
             </div>
             <div>
               <span className="text-2xl font-bold text-slate-900 block leading-none">

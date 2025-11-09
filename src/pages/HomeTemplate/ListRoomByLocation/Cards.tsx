@@ -24,13 +24,14 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { getListRoom } from "@/services/room.api";
+import { getRoomListApi } from "@/services/room.api";
 import { useQuery } from "@tanstack/react-query";
+import PaginationLayout from "@/layouts/Pagination";
 
 export default function RoomListing() {
   const { data: rooms = [] } = useQuery({
-    queryKey: ["getListRooms"],
-    queryFn: getListRoom,
+    queryKey: ["getRoomsList"],
+    queryFn: getRoomListApi,
   });
 
   return (
@@ -165,7 +166,7 @@ export default function RoomListing() {
                   </div>
                   <Button
                     size="sm"
-                    className="bg-red-500 hover:bg-red-600 text-white"
+                    className="bg-blue-700 hover:bg-blue-400 text-white cursor-pointer"
                   >
                     Xem chi tiết
                   </Button>
@@ -174,6 +175,7 @@ export default function RoomListing() {
             </div>
           ))}
         </div>
+        <PaginationLayout />
       </div>
     </div>
   );
