@@ -1,4 +1,4 @@
-export interface Room {
+export interface RoomItems {
   id: number;
   tenPhong: string;
   khach: number;

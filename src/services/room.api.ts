@@ -1,10 +1,11 @@
 import type { BaseApiResponse } from "@/interfaces/base.interface";
 import api from "./api";
-import type { Room } from "@/interfaces/room.interface";
+import type { RoomItems } from "@/interfaces/room.interface";
 
-export const getListRoom = async (): Promise<Room[] | undefined> => {
+export const getRoomListApi = async (): Promise<RoomItems[] | undefined> => {
   try {
-    const response = await api.get<BaseApiResponse<Room[]>>("phong-thue");
+    const response =
+      await api.get<BaseApiResponse<RoomItems[]>>("/phong-thue/");
     return response.data.content;
   } catch (error) {
     console.log(error);
