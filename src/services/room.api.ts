@@ -1,11 +1,18 @@
 import type { BaseApiResponse } from "@/interfaces/base.interface";
+import type { PaginationRoom, RoomItems } from "@/interfaces/room.interface";
 import api from "./api";
-import type { RoomItems } from "@/interfaces/room.interface";
-
-export const getRoomListApi = async (): Promise<RoomItems[] | undefined> => {
+export const getRoomListApi = async (
+  pageIndex: number,
+  pageSize: number,
+  keyword?: string
+): Promise<PaginationRoom<RoomItems[]> | undefined> => {
   try {
-    const response =
-      await api.get<BaseApiResponse<RoomItems[]>>("/phong-thue/");
+    const key = keyword ? `&keyword=${keyword}` : "";
+    const response = await api.get<
+      BaseApiResponse<PaginationRoom<RoomItems[]>>
+    >(
+      `phong-thue/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}${key}`
+    );
     return response.data.content;
   } catch (error) {
     console.log(error);
