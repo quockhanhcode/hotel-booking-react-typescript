@@ -14,6 +14,8 @@ import {
   X,
   Crown,
   Filter,
+  Mars,
+  Venus,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -26,6 +28,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { useUsersListQuery } from "@/hooks/useUserQuery";
 import type { UserItem } from "@/interfaces/user.interface";
+import { formatDateSafe } from "@/hooks/useFormatDateSafe";
+import { PaginationAdmin } from "../_Component/paginationAdmin";
 const UsersManagement = () => {
   // State
   const [users, setUsers] = useState([
@@ -74,12 +78,12 @@ const UsersManagement = () => {
       role: "USER",
     },
   ]);
-  const [viewMode, setViewMode] = useState("list"); //grid
+  const [viewMode, setViewMode] = useState("grid"); //grid
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState<UserItem[] | null>(null);
   const [detailUser, setDetailUser] = useState<UserItem | null>(null);
   // API
-  const { data: dataUserList } = useUsersListQuery(1, 5);
+  const { data: dataUserList } = useUsersListQuery(1, 9);
 
   useEffect(() => {
     setFilteredUsers(dataUserList?.data ?? []);
@@ -125,7 +129,11 @@ const UsersManagement = () => {
   };
 
   const getGenderIcon = (gender: boolean) => {
-    return gender ? "👨" : "👩";
+    return gender ? (
+      <Mars className="text-blue-600" />
+    ) : (
+      <Venus className="text-pink-600" />
+    );
   };
 
   const stats = {
@@ -182,7 +190,9 @@ const UsersManagement = () => {
               <p className="text-3xl font-bold text-cyan-600">{stats.male}</p>
             </div>
             <div className="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center">
-              <span className="text-2xl">👨</span>
+              <span className="text-2xl text-blue-600">
+                <Mars />
+              </span>
             </div>
           </div>
         </div>
@@ -193,7 +203,9 @@ const UsersManagement = () => {
               <p className="text-3xl font-bold text-pink-600">{stats.female}</p>
             </div>
             <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
-              <span className="text-2xl">👩</span>
+              <span className="text-2xl text-pink-600">
+                <Venus />
+              </span>
             </div>
           </div>
         </div>
@@ -266,11 +278,6 @@ const UsersManagement = () => {
               >
                 <div className="relative h-32 bg-gradient-to-r from-purple-500 to-indigo-600">
                   <div className="absolute -bottom-12 left-6 w-24 h-24 rounded-full overflow-hidden">
-                    {/* <img
-                      src={user.avatar}
-                      alt={user.name}
-                      className="w-full h-full rounded-full border-4 border-white shadow-lg"
-                    /> */}
                     {user.avatar ? (
                       <img
                         src={user.avatar}
@@ -278,7 +285,7 @@ const UsersManagement = () => {
                         className="w-full h-full rounded-full border-4 border-white shadow-lg"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-medium text-lg text-white uppercase">
+                      <div className="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-medium text-3xl text-white uppercase">
                         {user.name.split("", 1)}
                       </div>
                     )}
@@ -320,7 +327,7 @@ const UsersManagement = () => {
                     )}
                     <div className="flex items-center gap-2 text-sm text-slate-600">
                       <Calendar className="w-4 h-4 text-slate-400" />
-                      <span>{user.birthday}</span>
+                      <span>{formatDateSafe(user.birthday)}</span>
                     </div>
                   </div>
 
@@ -411,7 +418,7 @@ const UsersManagement = () => {
                         {user.phone || "-"}
                       </td>
                       <td className="px-6 py-4 text-slate-900">
-                        {user.birthday}
+                        {formatDateSafe(user.birthday)}
                       </td>
                       <td className="px-6 py-4">
                         <span
@@ -445,6 +452,11 @@ const UsersManagement = () => {
           </div>
         </div>
       )}
+
+      {/* Pagination */}
+      <div className="w-full mt-6 bg-red-400">
+        <PaginationAdmin />
+      </div>
 
       {showDetailModal && detailUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -514,7 +526,7 @@ const UsersManagement = () => {
                     <span className="text-sm text-slate-600">Ngày sinh</span>
                   </div>
                   <div className="font-medium text-slate-800">
-                    {detailUser.birthday}
+                    {formatDateSafe(detailUser.birthday)}
                   </div>
                 </div>
                 <div className="p-4 bg-slate-50 rounded-lg">
