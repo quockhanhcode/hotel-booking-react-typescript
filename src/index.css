@@ -170,3 +170,23 @@
 .animate-pulse-glow {
   animation: pulse-glow 2s infinite;
 }
+
+.no-overflow::-webkit-scrollbar {
+  width: 0px; 
+}
+
+.no-overflow::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.no-overflow::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.no-overflow::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+}
+
+.no-overflow::-webkit-scrollbar-corner {
+  background: transparent;
+}

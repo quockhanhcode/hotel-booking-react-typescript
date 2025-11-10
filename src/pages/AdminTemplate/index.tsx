@@ -182,7 +182,7 @@ export default function Dashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 overflow-auto ">
         <div className="p-8 max-md:p-5">
           {/* Header */}
           <div className="mb-8 animate-slide-in-right">
