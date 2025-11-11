@@ -1,8 +1,18 @@
 import type { BaseApiResponse } from "@/interfaces/base.interface";
 import type { PagiUser, UserItem } from "@/interfaces/user.interface";
 import api from "./api";
-// https://airbnbnew.cybersoft.edu.vn/api/users/phan-trang-tim-kiem?pageIndex=1&pageSize=2
-// https://airbnbnew.cybersoft.edu.vn/api/users/phan-trang-tim-kiem?pageIndex=1&pageSize=3&keyword=aa
+
+export const getUsersListAllApi = async () => {
+  try {
+    const response = await api.get<BaseApiResponse<UserItem[]>>(`users/`);
+    return response.data.content;
+  } catch (error) {
+    console.log("🎄 ~ getUsersListAllApi ~ error:", error)
+    throw error;
+  }
+};
+
+
 export const getUsersListApi = async (
   pageIndex: number,
   pageSize: number,
