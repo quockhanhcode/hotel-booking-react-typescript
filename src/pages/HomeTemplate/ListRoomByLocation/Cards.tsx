@@ -43,6 +43,13 @@ export default function RoomListing() {
     }, {});
   };
   // console.log("groupby", groupByLocations(locations));
+  const grouped = groupByLocations(locations);
+  const listAddress = Object.entries(grouped).map(([key]) => {
+    return key;
+  });
+  const handleSelected = (data: string) => {
+    console.log(data);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
@@ -60,15 +67,15 @@ export default function RoomListing() {
         <div className="mb-6 flex items-center gap-3">
           <MapPin className="text-red-500" size={20} />
           <label className="font-semibold text-slate-700">Chọn vị trí:</label>
-          <Select>
+          <Select onValueChange={handleSelected}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select a fruit" />
+              <SelectValue placeholder="Chọn khu vực" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {locations?.map((add) => (
-                  <SelectItem key={add.id} value={add.tinhThanh}>
-                    {add.tinhThanh}
+                {listAddress?.map((add, index) => (
+                  <SelectItem key={index} value={add}>
+                    {add}
                   </SelectItem>
                 ))}
               </SelectGroup>
