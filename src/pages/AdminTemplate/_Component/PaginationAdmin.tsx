@@ -1,38 +1,65 @@
 import {
   Pagination,
   PaginationContent,
-  // PaginationEllipsis,
   PaginationItem,
   PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 } from "@/components/ui/pagination";
-import { ChevronLeft, ChevronRight, Ellipsis } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 
-export function PaginationAdmin() {
+type PaginationAdmin = {
+  handlePagi: { pageIndex: number; pageSize: number; totalRow: number };
+};
+
+export function PaginationAdmin({ handlePagi }: PaginationAdmin) {
+  console.log("🎄 ~ PaginationAdmin ~ handlePagi:", handlePagi);
+  const { pageIndex, pageSize, totalRow } = handlePagi;
+  const totalPagi = Math.ceil(totalRow / pageSize);
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <ChevronLeft />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#" isActive>
-            2
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">3</PaginationLink>
+          <PaginationPrevious href="#" className="px-[10px]!" />
         </PaginationItem>
         {/* <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem> */}
+          <PaginationLink href="#" isActive>
+            1
+          </PaginationLink>
+        </PaginationItem> */}
+
+        {pageIndex > 1 && (
+          <PaginationItem>
+            <PaginationLink href="#">{pageIndex - 1}</PaginationLink>
+          </PaginationItem>
+        )}
+
+        {pageIndex && (
+          <PaginationItem>
+            <PaginationLink href="#" isActive>
+              {pageIndex}
+            </PaginationLink>
+          </PaginationItem>
+        )}
+
+        {pageIndex && (
+          <PaginationItem>
+            <PaginationLink href="#">{pageIndex + 1}</PaginationLink>
+          </PaginationItem>
+        )}
+        {totalPagi >= 4 && (
+          <PaginationItem className="mr-1">
+            <Ellipsis className="size-4" />
+          </PaginationItem>
+        )}
+        {totalPagi >= 3 && (
+          <PaginationItem>
+            <PaginationLink href="#">{totalPagi}</PaginationLink>
+          </PaginationItem>
+        )}
+        
         <PaginationItem>
-          <Ellipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <ChevronRight />
+          <PaginationNext href="#" className="px-[10px]!" />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

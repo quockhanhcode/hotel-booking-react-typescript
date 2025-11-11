@@ -26,10 +26,10 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { useUsersListQuery } from "@/hooks/useUserQuery";
+import { useUsersListAllQuery, useUsersListQuery } from "@/hooks/useUserQuery";
 import type { UserItem } from "@/interfaces/user.interface";
 import { formatDateSafe } from "@/hooks/useFormatDateSafe";
-import { PaginationAdmin } from "../_Component/paginationAdmin";
+import { PaginationAdmin } from "../_Component/PaginationAdmin";
 const UsersManagement = () => {
   // State
   const [users, setUsers] = useState([
@@ -83,7 +83,9 @@ const UsersManagement = () => {
   const [filteredUsers, setFilteredUsers] = useState<UserItem[] | null>(null);
   const [detailUser, setDetailUser] = useState<UserItem | null>(null);
   // API
-  const { data: dataUserList } = useUsersListQuery(1, 9);
+
+  const { data: dataUserListAll } = useUsersListAllQuery();
+  const { data: dataUserList } = useUsersListQuery(10, 9);
 
   useEffect(() => {
     setFilteredUsers(dataUserList?.data ?? []);
@@ -136,13 +138,30 @@ const UsersManagement = () => {
     );
   };
 
-  const stats = {
-    total: users.length,
-    admin: users.filter((u) => u.role === "ADMIN").length,
-    user: users.filter((u) => u.role === "USER").length,
-    male: users.filter((u) => u.gender === true).length,
-    female: users.filter((u) => u.gender === false).length,
+  const getGenderBg = (gender: boolean) => {
+    return gender
+      ? "from-blue-600 to-indigo-600"
+      : "bg-gradient-to-r from-pink-400 to-purple-500";
   };
+
+  const stats = {
+    total: dataUserListAll?.length,
+    admin: dataUserListAll?.filter((u) => u.role === "ADMIN").length,
+    user: dataUserListAll?.filter((u) => u.role === "USER").length,
+    male: dataUserListAll?.filter((u) => u.gender === true).length,
+    female: dataUserListAll?.filter((u) => u.gender === false).length,
+  };
+
+  // Pagi
+  const [userPagi, setUserPagi] = useState(1);
+  const handlePagi = {
+    // setUserPagi: setUserPagi,
+    pageIndex: dataUserList?.pageIndex,
+    pageSize: dataUserList?.pageSize,
+    totalRow: dataUserList?.totalRow,
+  };
+
+  // Handle Pagi
 
   return (
     <>
@@ -285,7 +304,9 @@ const UsersManagement = () => {
                         className="w-full h-full rounded-full border-4 border-white shadow-lg"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-medium text-3xl text-white uppercase">
+                      <div
+                        className={`w-full h-full bg-gradient-to-r ${getGenderBg(user.gender)} flex items-center justify-center font-medium text-3xl text-white uppercase`}
+                      >
                         {user.name.split("", 1)}
                       </div>
                     )}
@@ -397,7 +418,9 @@ const UsersManagement = () => {
                                 className="w-full h-full rounded-full"
                               />
                             ) : (
-                              <div className="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-medium text-lg text-white uppercase">
+                              <div
+                                className={`w-full h-full bg-gradient-to-r ${getGenderBg(user.gender)} flex items-center justify-center font-medium text-lg text-white uppercase`}
+                              >
                                 {user.name.split("", 1)}
                               </div>
                             )}
@@ -454,8 +477,8 @@ const UsersManagement = () => {
       )}
 
       {/* Pagination */}
-      <div className="w-full mt-6 bg-red-400">
-        <PaginationAdmin />
+      <div className="w-full mt-6">
+        <PaginationAdmin handlePagi={handlePagi} />
       </div>
 
       {showDetailModal && detailUser && (
@@ -469,11 +492,6 @@ const UsersManagement = () => {
                 <X className="w-5 h-5 text-white" />
               </button>
               <div className="absolute -bottom-12 left-6 w-24 h-24 rounded-full overflow-hidden">
-                {/* <img
-                  src={detailUser.avatar}
-                  alt={detailUser.name}
-                  className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
-                /> */}
                 {detailUser.avatar ? (
                   <img
                     src={detailUser.avatar}
@@ -481,7 +499,9 @@ const UsersManagement = () => {
                     className="w-full h-full rounded-full border-4 border-white shadow-lg"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center font-medium text-lg text-white uppercase">
+                  <div
+                    className={`w-full h-full bg-gradient-to-r ${getGenderBg(detailUser.gender)} flex items-center justify-center font-medium text-3xl text-white uppercase`}
+                  >
                     {detailUser.name.split("", 1)}
                   </div>
                 )}
