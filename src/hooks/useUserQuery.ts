@@ -12,10 +12,10 @@ export const useUsersListQuery = (
   pageIndex: number,
   pageSize: number,
   keyword?: string,
-  optional?: Partial<Omit<UseQueryOptions<PagiUser<UserItem[]>, Error, PagiUser<UserItem[]>, string[]>, "queryKey" | "queryFn">>
+  optional?: Partial<Omit<UseQueryOptions<PagiUser<UserItem[]>, Error, PagiUser<UserItem[]>, [string, number, string | undefined]>, "queryKey" | "queryFn">>
 ) =>
   useQuery({
-    queryKey: ["users-list"],
+    queryKey: ["users-list", pageIndex, keyword],
     queryFn: () => getUsersListApi(pageIndex, pageSize, keyword),
     ...optional,
   });
