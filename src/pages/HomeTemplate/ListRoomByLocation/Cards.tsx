@@ -7,6 +7,7 @@ import {
   Star,
   Utensils,
   Car,
+  Filter,
 } from "lucide-react";
 import {
   Select,
@@ -18,11 +19,16 @@ import {
 } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
 import PaginationLayout from "@/layouts/Pagination";
-import { getRoomListApi } from "@/services/room.api";
+import { getRoomByLocation, getRoomListApi } from "@/services/room.api";
 import { getLocation } from "@/services/location.api";
 import type { Location } from "@/interfaces/location.interface";
+import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
 
 export default function RoomListing() {
+  const [selectedProvince, setSelectedProvince] = useState<string>("");
+  const [listLocation, setListLocation] = useState<Location[]>([]);
+  const [filteredRoom, setFilteredRoom] = useState([]);
   const { data: rooms } = useQuery({
     queryKey: ["getListRoom"],
     queryFn: () => getRoomListApi(1, 9),
@@ -42,14 +48,20 @@ export default function RoomListing() {
       return acc;
     }, {});
   };
-  // console.log("groupby", groupByLocations(locations));
   const grouped = groupByLocations(locations);
+
   const listAddress = Object.entries(grouped).map(([key]) => {
     return key;
   });
-  const handleSelected = (data: string) => {
-    console.log(data);
+
+  const handleSelectProvince = (province: string) => {
+    setSelectedProvince(province);
+    setListLocation(grouped[province] || []);
   };
+
+  const displayRooms =
+    filteredRoom.length > 0 ? filteredRoom : rooms?.data || [];
+  console.log("phong", displayRooms);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
@@ -64,30 +76,78 @@ export default function RoomListing() {
         </div>
 
         {/* Location Filter */}
-        <div className="mb-6 flex items-center gap-3">
-          <MapPin className="text-red-500" size={20} />
-          <label className="font-semibold text-slate-700">Chọn vị trí:</label>
-          <Select onValueChange={handleSelected}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Chọn khu vực" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {listAddress?.map((add, index) => (
-                  <SelectItem key={index} value={add}>
-                    {add}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <span className="text-sm text-slate-600 ml-2">
-            {/* ({filteredRooms.length} phòng) */}
-          </span>
-        </div>
+        <Card className="mb-8 border-gray-200">
+          <CardContent className="flex flex-wrap flex-col pt-6">
+            <div className="gap-2 mb-6">
+              <Filter className="w-5 h-5 text-blue-600" />
+              <span className="font-bold text-gray-900 text-lg">
+                Lọc tìm kiếm
+              </span>
+            </div>
+            <div className="gap-6 space-y-4">
+              {/* Province Select */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Tỉnh / Thành phố
+                </label>
+                <Select onValueChange={handleSelectProvince}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue
+                      placeholder="Chọn tỉnh / thành phố"
+                      className="w-full"
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {listAddress.map((add) => (
+                        <SelectItem key={add} value={add}>
+                          {add}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
 
+              {/* Location Select */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Vị trí
+                </label>
+                <Select
+                  onValueChange={(value) => getRoomByLocation(String(value))}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue
+                      placeholder={
+                        selectedProvince
+                          ? "Chọn vị trí"
+                          : "Vui lòng chọn tỉnh trước"
+                      }
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {listLocation.length > 0 ? (
+                        listLocation.map((loc) => (
+                          <SelectItem key={loc.id} value={String(loc.id)}>
+                            {loc.tenViTri}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <SelectItem disabled value="none">
+                          Không có vị trí
+                        </SelectItem>
+                      )}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {rooms?.data.map((room) => (
+          {displayRooms.map((room) => (
             <div
               key={room.id}
               className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-blue-200"
