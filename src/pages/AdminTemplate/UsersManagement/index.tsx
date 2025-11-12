@@ -32,64 +32,19 @@ import { formatDateSafe } from "@/hooks/useFormatDateSafe";
 import { PaginationAdmin } from "../_Component/PaginationAdmin";
 const UsersManagement = () => {
   // State
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: "erjhhY",
-      email: "admin@gmail.com",
-      password: "",
-      phone: null,
-      birthday: "29/11/1993",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
-      gender: true,
-      role: "ADMIN",
-    },
-    {
-      id: 45047,
-      name: "Updated Name",
-      email: "updated@example.com",
-      password: "",
-      phone: null,
-      birthday: "12/02/2025",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
-      gender: false,
-      role: "USER",
-    },
-    {
-      id: 45048,
-      name: "hodydab",
-      email: "qitosu@mailinator.com",
-      password: "",
-      phone: null,
-      birthday: "05/02/2025",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=3",
-      gender: false,
-      role: "ADMIN",
-    },
-    {
-      id: 45049,
-      name: "xudabor",
-      email: "nekacipyp@mailinator.com",
-      password: "",
-      phone: null,
-      birthday: "05/02/2025",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=5",
-      gender: true,
-      role: "USER",
-    },
-  ]);
   const [viewMode, setViewMode] = useState("grid"); //grid
+  const [pagiCurrent, setPagiCurrent] = useState(1);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState<UserItem[] | null>(null);
   const [detailUser, setDetailUser] = useState<UserItem | null>(null);
   // API
 
   const { data: dataUserListAll } = useUsersListAllQuery();
-  const { data: dataUserList } = useUsersListQuery(10, 9);
+  const { data: dataUserList } = useUsersListQuery(pagiCurrent, 9);
 
   useEffect(() => {
     setFilteredUsers(dataUserList?.data ?? []);
-  }, [dataUserList]);
+  }, [dataUserList, pagiCurrent]);
 
   // const [searchTerm, setSearchTerm] = useState("");
   // const [filterRole, setFilterRole] = useState("all");
@@ -152,16 +107,16 @@ const UsersManagement = () => {
     female: dataUserListAll?.filter((u) => u.gender === false).length,
   };
 
-  // Pagi
-  const [userPagi, setUserPagi] = useState(1);
-  const handlePagi = {
-    // setUserPagi: setUserPagi,
-    pageIndex: dataUserList?.pageIndex,
-    pageSize: dataUserList?.pageSize,
-    totalRow: dataUserList?.totalRow,
+  // Pagination
+  const infoPagi = {
+    pageIndex: dataUserList?.pageIndex || 0,
+    pageSize: dataUserList?.pageSize || 0,
+    totalRow: dataUserList?.totalRow || 0,
   };
 
-  // Handle Pagi
+  const handlePagi = (data: number) => {
+    setPagiCurrent(data);
+  };
 
   return (
     <>
@@ -478,7 +433,10 @@ const UsersManagement = () => {
 
       {/* Pagination */}
       <div className="w-full mt-6">
-        <PaginationAdmin handlePagi={handlePagi} />
+        <PaginationAdmin
+          infoPagi={infoPagi}
+          handlePagi={handlePagi}
+        />
       </div>
 
       {showDetailModal && detailUser && (
