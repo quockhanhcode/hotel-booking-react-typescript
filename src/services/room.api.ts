@@ -19,3 +19,15 @@ export const getRoomListApi = async (
     throw error;
   }
 };
+
+export const getRoomByLocation = async (maViTri: string) => {
+  try {
+    const response = await api.get(
+      `/phong-thue/lay-phong-theo-vi-tri?maViTri=${maViTri}`
+    );
+    return response.data.content;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
