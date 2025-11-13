@@ -19,55 +19,27 @@ import {
 } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
 import PaginationLayout from "@/layouts/Pagination";
-import { getRoomByLocation, getRoomListApi } from "@/services/room.api";
 import { getLocation } from "@/services/location.api";
-import type { Location } from "@/interfaces/location.interface";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
+import { getRoomListApi } from "@/services/room.api";
 
 export default function RoomListing() {
-  const [selectedProvince, setSelectedProvince] = useState<string>("");
-  const [listLocation, setListLocation] = useState<string | null>(null);
-  const [filteredRoom, setFilteredRoom] = useState([]);
-  console.log("filter", filteredRoom);
+  const [province, setProvince] = useState<string>("");
 
-  const { data: rooms } = useQuery({
+  const { data: listRooms } = useQuery({
     queryKey: ["getListRoom"],
     queryFn: () => getRoomListApi(1, 9),
   });
+  // Get Province
   const { data: locations = [] } = useQuery({
     queryKey: ["getListLocation"],
     queryFn: getLocation,
   });
 
-  const { data: handleRoomsByLocation = [] } = useQuery({
-    queryKey: ["getListRoomByLocation", listLocation],
-    queryFn: () => getRoomByLocation(listLocation as string),
-  });
-
-  const groupByLocations = (locations: Location[]) => {
-    return locations.reduce<Record<string, Location[]>>((acc, curr) => {
-      const key = curr.tinhThanh;
-      if (!acc[key]) {
-        acc[key] = [];
-      }
-      acc[key].push(curr);
-      return acc;
-    }, {});
+  const handleSelectProvince = (val: string): void => {
+    setProvince(val);
   };
-  const grouped = groupByLocations(locations);
-
-  const listAddress = Object.entries(grouped).map(([key]) => {
-    return key;
-  });
-
-  const handleSelectProvince = (province: string) => {
-    setSelectedProvince(province);
-    // setListLocation(grouped[province] || []);
-  };
-
-  const displayRooms =
-    filteredRoom.length > 0 ? filteredRoom : rooms?.data || [];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
@@ -96,7 +68,7 @@ export default function RoomListing() {
                 <label className="block text-sm font-semibold text-gray-700">
                   Tỉnh / Thành phố
                 </label>
-                <Select onValueChange={handleSelectProvince}>
+                <Select onValueChange={handleSelectProvince} value={province}>
                   <SelectTrigger className="w-full">
                     <SelectValue
                       placeholder="Chọn tỉnh / thành phố"
@@ -105,9 +77,9 @@ export default function RoomListing() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      {listAddress.map((add) => (
-                        <SelectItem key={add} value={add}>
-                          {add}
+                      {locations.map((add) => (
+                        <SelectItem key={add.id} value={add.tinhThanh}>
+                          {add.tinhThanh}
                         </SelectItem>
                       ))}
                     </SelectGroup>
@@ -120,31 +92,21 @@ export default function RoomListing() {
                 <label className="block text-sm font-semibold text-gray-700">
                   Vị trí
                 </label>
-                <Select
-                  onValueChange={(value) => getRoomByLocation(String(value))}
-                >
+                <Select>
                   <SelectTrigger className="w-full">
                     <SelectValue
                       placeholder={
-                        selectedProvince
-                          ? "Chọn vị trí"
-                          : "Vui lòng chọn tỉnh trước"
+                        province ? "Chọn vị trí" : "Vui lòng chọn tỉnh trước"
                       }
                     />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      {listLocation.length > 0 ? (
-                        listLocation.map((loc) => (
-                          <SelectItem key={loc.id} value={String(loc.id)}>
-                            {loc.tenViTri}
-                          </SelectItem>
-                        ))
-                      ) : (
-                        <SelectItem disabled value="none">
-                          Không có vị trí
-                        </SelectItem>
-                      )}
+                      <SelectItem value="apple">Apple</SelectItem>
+                      <SelectItem value="banana">Banana</SelectItem>
+                      <SelectItem value="blueberry">Blueberry</SelectItem>
+                      <SelectItem value="grapes">Grapes</SelectItem>
+                      <SelectItem value="pineapple">Pineapple</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -153,7 +115,7 @@ export default function RoomListing() {
           </CardContent>
         </Card>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayRooms.map((room) => (
+          {listRooms?.data.map((room) => (
             <div
               key={room.id}
               className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-blue-200"
