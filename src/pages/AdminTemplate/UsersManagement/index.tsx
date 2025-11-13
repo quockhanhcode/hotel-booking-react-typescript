@@ -32,8 +32,8 @@ import type { UserItem } from "@/interfaces/user.interface";
 import { formatDateSafe } from "@/hooks/useFormatDateSafe";
 import { PaginationAdmin } from "../_Component/PaginationAdmin";
 import Loading from "../_Component/Loading";
-import UserPopup from "./UserPopup";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
+import UserDetailPopup from "./UserDetailPopup";
 const UsersManagement = () => {
   // State
   const [viewMode, setViewMode] = useState("list"); //grid
@@ -447,7 +447,7 @@ const UsersManagement = () => {
         </div>
       )}
 
-      {/* {showDetailModal && detailUser && (
+      {showDetailModal && detailUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full">
             <div className="relative h-32 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-t-xl">
@@ -567,12 +567,12 @@ const UsersManagement = () => {
             </div>
           </div>
         </div>
-      )} */}
+      )}
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline">Open Dialog</Button>
         </DialogTrigger>
-        <UserPopup />
+        <UserDetailPopup detailUser={detailUser} />
       </Dialog>
     </>
   );
