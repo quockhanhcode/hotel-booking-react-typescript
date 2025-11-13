@@ -27,8 +27,10 @@ import { useState } from "react";
 
 export default function RoomListing() {
   const [selectedProvince, setSelectedProvince] = useState<string>("");
-  const [listLocation, setListLocation] = useState<Location[]>([]);
+  const [listLocation, setListLocation] = useState<string | null>(null);
   const [filteredRoom, setFilteredRoom] = useState([]);
+  console.log("filter", filteredRoom);
+
   const { data: rooms } = useQuery({
     queryKey: ["getListRoom"],
     queryFn: () => getRoomListApi(1, 9),
@@ -36,6 +38,11 @@ export default function RoomListing() {
   const { data: locations = [] } = useQuery({
     queryKey: ["getListLocation"],
     queryFn: getLocation,
+  });
+
+  const { data: handleRoomsByLocation = [] } = useQuery({
+    queryKey: ["getListRoomByLocation", listLocation],
+    queryFn: () => getRoomByLocation(listLocation as string),
   });
 
   const groupByLocations = (locations: Location[]) => {
@@ -56,12 +63,11 @@ export default function RoomListing() {
 
   const handleSelectProvince = (province: string) => {
     setSelectedProvince(province);
-    setListLocation(grouped[province] || []);
+    // setListLocation(grouped[province] || []);
   };
 
   const displayRooms =
     filteredRoom.length > 0 ? filteredRoom : rooms?.data || [];
-  console.log("phong", displayRooms);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
