@@ -16,6 +16,7 @@ import {
   Filter,
   Mars,
   Venus,
+  LockKeyhole,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -31,6 +32,8 @@ import type { UserItem } from "@/interfaces/user.interface";
 import { formatDateSafe } from "@/hooks/useFormatDateSafe";
 import { PaginationAdmin } from "../_Component/PaginationAdmin";
 import Loading from "../_Component/Loading";
+import UserPopup from "./UserPopup";
+import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 const UsersManagement = () => {
   // State
   const [viewMode, setViewMode] = useState("list"); //grid
@@ -444,7 +447,7 @@ const UsersManagement = () => {
         </div>
       )}
 
-      {showDetailModal && detailUser && (
+      {/* {showDetailModal && detailUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full">
             <div className="relative h-32 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-t-xl">
@@ -523,6 +526,18 @@ const UsersManagement = () => {
                 </div>
               </div>
 
+              <div className="p-4 bg-blue-50 rounded-lg mb-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <LockKeyhole className="w-5 h-5 text-blue-600" />
+                  <span className="text-sm text-blue-900 font-medium">
+                    Thông tin hệ thống
+                  </span>
+                </div>
+                <div className="text-blue-800 text-sm">
+                  <span className="font-semibold">{detailUser.password}</span>
+                </div>
+              </div>
+
               <div className="p-4 bg-purple-50 rounded-lg mb-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Shield className="w-5 h-5 text-purple-600" />
@@ -552,7 +567,13 @@ const UsersManagement = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline">Open Dialog</Button>
+        </DialogTrigger>
+        <UserPopup />
+      </Dialog>
     </>
   );
 };
