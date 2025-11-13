@@ -30,9 +30,10 @@ import { useUsersListAllQuery, useUsersListQuery } from "@/hooks/useUserQuery";
 import type { UserItem } from "@/interfaces/user.interface";
 import { formatDateSafe } from "@/hooks/useFormatDateSafe";
 import { PaginationAdmin } from "../_Component/PaginationAdmin";
+import Loading from "../_Component/Loading";
 const UsersManagement = () => {
   // State
-  const [viewMode, setViewMode] = useState("grid"); //grid
+  const [viewMode, setViewMode] = useState("list"); //grid
   const [pagiCurrent, setPagiCurrent] = useState(1);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState<UserItem[] | null>(null);
@@ -40,7 +41,10 @@ const UsersManagement = () => {
   // API
 
   const { data: dataUserListAll } = useUsersListAllQuery();
-  const { data: dataUserList } = useUsersListQuery(pagiCurrent, 9);
+  const { data: dataUserList, isLoading: isLoadingList } = useUsersListQuery(
+    pagiCurrent,
+    9
+  );
 
   useEffect(() => {
     setFilteredUsers(dataUserList?.data ?? []);
@@ -244,7 +248,6 @@ const UsersManagement = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredUsers?.map((user) => {
             const roleBadge = getRoleBadge(user.role);
-
             return (
               <div
                 key={user.id}
@@ -277,7 +280,7 @@ const UsersManagement = () => {
                 </div>
                 <div className="pt-14 px-6 pb-6">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-xl font-bold text-slate-800">
+                    <h3 className="text-xl font-bold text-slate-800 line-clamp-1">
                       {user.name}
                     </h3>
                     <span className="text-lg">
@@ -292,17 +295,17 @@ const UsersManagement = () => {
 
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center gap-2 text-sm text-slate-600">
-                      <Mail className="w-4 h-4 text-slate-400" />
+                      <Mail className="w-4 h-4 text-slate-400 shrink-0" />
                       <span className="truncate">{user.email}</span>
                     </div>
                     {user.phone && (
                       <div className="flex items-center gap-2 text-sm text-slate-600">
-                        <Phone className="w-4 h-4 text-slate-400" />
+                        <Phone className="w-4 h-4 text-slate-400 shrink-0" />
                         <span>{user.phone}</span>
                       </div>
                     )}
                     <div className="flex items-center gap-2 text-sm text-slate-600">
-                      <Calendar className="w-4 h-4 text-slate-400" />
+                      <Calendar className="w-4 h-4 text-slate-400 shrink-0" />
                       <span>{formatDateSafe(user.birthday)}</span>
                     </div>
                   </div>
@@ -331,25 +334,25 @@ const UsersManagement = () => {
       ) : (
         <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full table-fixed">
               <thead className="bg-slate-50 border-b border-slate-200">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase w-[24%]">
                     Người dùng
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase w-[24%]">
                     Email
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase ">
                     SĐT
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase ">
                     Ngày sinh
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase ">
                     Vai trò
                   </th>
-                  <th className="px-6 py-4 text-right text-xs font-semibold text-slate-600 uppercase">
+                  <th className="px-6 py-4 text-right text-xs font-semibold text-slate-600 uppercase w-[8%]">
                     Thao tác
                   </th>
                 </tr>
@@ -365,7 +368,7 @@ const UsersManagement = () => {
                     >
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-full overflow-hidden">
+                          <div className="w-12 h-12 rounded-full overflow-hidden shrink-0">
                             {user.avatar ? (
                               <img
                                 src={user.avatar}
@@ -381,7 +384,7 @@ const UsersManagement = () => {
                             )}
                           </div>
                           <div>
-                            <div className="font-medium text-slate-900 flex items-center gap-2">
+                            <div className="font-medium text-slate-900 flex items-center gap-2 break-all">
                               {user.name}
                               <span>{getGenderIcon(user.gender)}</span>
                             </div>
@@ -391,7 +394,9 @@ const UsersManagement = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-slate-900">{user.email}</td>
+                      <td className="px-6 py-4 text-slate-900 break-all">
+                        {user.email}
+                      </td>
                       <td className="px-6 py-4 text-slate-900">
                         {user.phone || "-"}
                       </td>
@@ -430,14 +435,14 @@ const UsersManagement = () => {
           </div>
         </div>
       )}
+      {isLoadingList && <Loading />}
 
       {/* Pagination */}
-      <div className="w-full mt-6">
-        <PaginationAdmin
-          infoPagi={infoPagi}
-          handlePagi={handlePagi}
-        />
-      </div>
+      {infoPagi.pageIndex > 0 && (
+        <div className="w-full mt-6">
+          <PaginationAdmin infoPagi={infoPagi} handlePagi={handlePagi} />
+        </div>
+      )}
 
       {showDetailModal && detailUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
