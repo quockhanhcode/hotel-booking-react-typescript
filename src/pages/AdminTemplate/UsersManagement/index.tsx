@@ -8,15 +8,12 @@ import {
   Mail,
   Phone,
   Calendar,
-  Shield,
   Users,
   Eye,
-  X,
   Crown,
   Filter,
   Mars,
   Venus,
-  LockKeyhole,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -32,7 +29,7 @@ import type { UserItem } from "@/interfaces/user.interface";
 import { formatDateSafe } from "@/hooks/useFormatDateSafe";
 import { PaginationAdmin } from "../_Component/PaginationAdmin";
 import Loading from "../_Component/Loading";
-import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
+import { Dialog } from "@/components/ui/dialog";
 import UserDetailPopup from "./UserDetailPopup";
 const UsersManagement = () => {
   // State
@@ -41,6 +38,7 @@ const UsersManagement = () => {
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState<UserItem[] | null>(null);
   const [detailUser, setDetailUser] = useState<UserItem | null>(null);
+  const [mode, setMode] = useState<"add" | "edit" | "detail" | null>(null);
   // API
 
   const { data: dataUserListAll } = useUsersListAllQuery();
@@ -66,9 +64,10 @@ const UsersManagement = () => {
   //   return matchesSearch && matchesRole;
   // });
 
-  const showUserDetail = (user: UserItem) => {
+  const handleUserDetail = (user: UserItem) => {
     setDetailUser(user);
     setShowDetailModal(true);
+    setMode("detail");
   };
 
   // Style css && text && icon
@@ -315,7 +314,7 @@ const UsersManagement = () => {
 
                   <div className="flex items-center justify-between pt-4 border-t border-slate-200">
                     <button
-                      onClick={() => showUserDetail(user)}
+                      onClick={() => handleUserDetail(user)}
                       className="text-sm text-purple-600 hover:underline font-medium"
                     >
                       Chi tiết
@@ -417,7 +416,7 @@ const UsersManagement = () => {
                       <td className="px-6 py-4 text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button
-                            onClick={() => showUserDetail(user)}
+                            onClick={() => handleUserDetail(user)}
                             className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg"
                           >
                             <Eye className="w-4 h-4" />
@@ -446,133 +445,11 @@ const UsersManagement = () => {
           <PaginationAdmin infoPagi={infoPagi} handlePagi={handlePagi} />
         </div>
       )}
-
-      {showDetailModal && detailUser && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full">
-            <div className="relative h-32 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-t-xl">
-              <button
-                onClick={() => setShowDetailModal(false)}
-                className="absolute top-4 right-4 p-2 bg-white/20 hover:bg-white/30 rounded-lg backdrop-blur-sm"
-              >
-                <X className="w-5 h-5 text-white" />
-              </button>
-              <div className="absolute -bottom-12 left-6 w-24 h-24 rounded-full overflow-hidden">
-                {detailUser.avatar ? (
-                  <img
-                    src={detailUser.avatar}
-                    alt={detailUser.name}
-                    className="w-full h-full rounded-full border-4 border-white shadow-lg"
-                  />
-                ) : (
-                  <div
-                    className={`w-full h-full bg-gradient-to-r ${getGenderBg(detailUser.gender)} flex items-center justify-center font-medium text-3xl text-white uppercase`}
-                  >
-                    {detailUser.name.split("", 1)}
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="pt-16 px-6 pb-6">
-              <div className="flex items-center gap-3 mb-6">
-                <h2 className="text-2xl font-bold text-slate-800">
-                  {detailUser.name}
-                </h2>
-                <span>{getGenderIcon(detailUser.gender)}</span>
-                <span
-                  className={`px-3 py-1 rounded-full text-xs font-medium inline-flex items-center gap-1 ${getRoleBadge(detailUser.role).bg} ${getRoleBadge(detailUser.role).text}`}
-                >
-                  {getRoleBadge(detailUser.role).icon}
-                  {detailUser.role}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="p-4 bg-slate-50 rounded-lg">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Mail className="w-5 h-5 text-slate-600" />
-                    <span className="text-sm text-slate-600">Email</span>
-                  </div>
-                  <div className="font-medium text-slate-800">
-                    {detailUser.email}
-                  </div>
-                </div>
-                <div className="p-4 bg-slate-50 rounded-lg">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Phone className="w-5 h-5 text-slate-600" />
-                    <span className="text-sm text-slate-600">Điện thoại</span>
-                  </div>
-                  <div className="font-medium text-slate-800">
-                    {detailUser.phone || "Chưa có"}
-                  </div>
-                </div>
-                <div className="p-4 bg-slate-50 rounded-lg">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Calendar className="w-5 h-5 text-slate-600" />
-                    <span className="text-sm text-slate-600">Ngày sinh</span>
-                  </div>
-                  <div className="font-medium text-slate-800">
-                    {formatDateSafe(detailUser.birthday)}
-                  </div>
-                </div>
-                <div className="p-4 bg-slate-50 rounded-lg">
-                  <div className="flex items-center gap-2 mb-2">
-                    <User className="w-5 h-5 text-slate-600" />
-                    <span className="text-sm text-slate-600">Giới tính</span>
-                  </div>
-                  <div className="font-medium text-slate-800">
-                    {getGenderLabel(detailUser.gender)}
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 bg-blue-50 rounded-lg mb-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <LockKeyhole className="w-5 h-5 text-blue-600" />
-                  <span className="text-sm text-blue-900 font-medium">
-                    Thông tin hệ thống
-                  </span>
-                </div>
-                <div className="text-blue-800 text-sm">
-                  <span className="font-semibold">{detailUser.password}</span>
-                </div>
-              </div>
-
-              <div className="p-4 bg-purple-50 rounded-lg mb-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <Shield className="w-5 h-5 text-purple-600" />
-                  <span className="text-sm text-purple-900 font-medium">
-                    Thông tin hệ thống
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div className="text-purple-800">
-                    ID: <span className="font-semibold">#{detailUser.id}</span>
-                  </div>
-                  <div className="text-purple-800">
-                    Vai trò:{" "}
-                    <span className="font-semibold">{detailUser.role}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex gap-3">
-                <button className="flex-1 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                  Chỉnh sửa
-                </button>
-                <button className="px-4 py-2.5 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors">
-                  Xóa
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline">Open Dialog</Button>
-        </DialogTrigger>
-        <UserDetailPopup detailUser={detailUser} />
+      <Dialog
+        open={showDetailModal}
+        onOpenChange={(open) => setShowDetailModal(open)}
+      >
+        {mode === "detail" && <UserDetailPopup detailUser={detailUser} />}
       </Dialog>
     </>
   );
