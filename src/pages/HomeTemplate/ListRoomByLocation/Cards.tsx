@@ -21,24 +21,42 @@ import { useQuery } from "@tanstack/react-query";
 import PaginationLayout from "@/layouts/Pagination";
 import { getLocation } from "@/services/location.api";
 import { Card, CardContent } from "@/components/ui/card";
+import { getListRoomByLocation, getRoomListApi } from "@/services/room.api";
 import { useState } from "react";
-import { getRoomListApi } from "@/services/room.api";
 
 export default function RoomListing() {
   const [province, setProvince] = useState<string>("");
+  const [filteredLocation, setFilterdLocation] = useState<any[]>([]);
+  const [selectID, getSelectID] = useState<string>("");
+  const [filterRooms, setFilterRooms] = useState();
 
-  const { data: listRooms } = useQuery({
+  const { data: listRooms = [] } = useQuery({
     queryKey: ["getListRoom"],
     queryFn: () => getRoomListApi(1, 9),
   });
+
   // Get Province
   const { data: locations = [] } = useQuery({
     queryKey: ["getListLocation"],
     queryFn: getLocation,
   });
 
+  const { data: listRoomsLocation } = useQuery({
+    queryKey: ["getListRoomsLocation", selectID],
+    queryFn: () => getListRoomByLocation(selectID),
+    enabled: !!selectID,
+  });
+
+  console.log(listRoomsLocation);
+
   const handleSelectProvince = (val: string): void => {
     setProvince(val);
+
+    const filtered = locations.filter((location) => location.tinhThanh === val);
+    setFilterdLocation(filtered);
+  };
+  const handleGetIDLocation = (e: string) => {
+    getSelectID(e);
   };
 
   return (
@@ -92,7 +110,10 @@ export default function RoomListing() {
                 <label className="block text-sm font-semibold text-gray-700">
                   Vị trí
                 </label>
-                <Select>
+                <Select
+                  disabled={!province}
+                  onValueChange={(value) => handleGetIDLocation(value)}
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue
                       placeholder={
@@ -102,11 +123,11 @@ export default function RoomListing() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="apple">Apple</SelectItem>
-                      <SelectItem value="banana">Banana</SelectItem>
-                      <SelectItem value="blueberry">Blueberry</SelectItem>
-                      <SelectItem value="grapes">Grapes</SelectItem>
-                      <SelectItem value="pineapple">Pineapple</SelectItem>
+                      {filteredLocation.map((location) => (
+                        <SelectItem key={location.id} value={location.id}>
+                          {location.tenViTri}
+                        </SelectItem>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -115,7 +136,7 @@ export default function RoomListing() {
           </CardContent>
         </Card>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {listRooms?.data.map((room) => (
+          {listRooms.data?.map((room) => (
             <div
               key={room.id}
               className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-blue-200"
